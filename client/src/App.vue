@@ -10,6 +10,15 @@
 			</div>
 		</header>
 		<router-view id="main" />
+		<div id="heart_fav" ref="heart_fav">
+			<transition>
+				<img v-if="heart_display" :src="heart" />
+			</transition>
+		</div>
+		<div id="heart" @click="fav">
+			<div style="background:white;">{{ nb_fav }}</div>
+			<img :src="heart" />
+		</div>
 		<!-- <div ref="btn-notify" id="btn-notify" class="onesignal-customlink-container"></div> -->
 	</div>
 </template>
@@ -36,7 +45,11 @@ export default {
 		this.$i18n.locale = locale
 
 		return {
-			locale: locale
+			locale: locale,
+			show: true,
+			heart: require("./images/heart.png"),
+			nb_fav: 30,
+			heart_display: false
 			// logo: require("./images/logo.png"),
 			// twitter: require("./images/twitter.png"),
 			// facebook: require("./images/facebook.png"),
@@ -45,8 +58,36 @@ export default {
 		}
 	},
 	watch: {
+		locale(v) {
+			localStorage.locale = this.$i18n.locale = v
+			location.reload()
+		}
 	},
 	methods: {
+		fav() {
+			this.rpc("pay", "/", { user_id: 1, content_id: `like_1_1` }).then(r => {
+				console.log(r)
+			})
+
+			this.nb_fav++
+
+			var r1 = Math.floor(Math.random()*100)
+			var r2 = Math.floor(Math.random()*100)
+			var r3 = Math.floor(Math.random()*100)
+
+			this.$refs.heart_fav.setAttribute("style", `
+				z-index:99999;
+				position:fixed;
+				width: 15%;
+				top: ${r2}%;
+				left: ${r3}%;
+			`)
+			this.$refs.heart_fav.width = "200px";
+			this.heart_display = true
+			setTimeout(() => {
+				this.heart_display = false
+			}, 0)
+		}
 	},
 	mounted() {
 	}
@@ -57,6 +98,34 @@ export default {
 html, #app, img, .logo, header {
 	background-color: #e1fae1 !important;
 	font-size: 18px;
+}
+
+.v-leave-active {
+  transition: opacity 0.5s;
+}
+.v-leave-to {
+  opacity: 0.5;
+}
+
+#heart {
+	opacity: 0.7;
+	position: fixed;
+	z-index: 999999;
+	bottom: 0;
+	right: 0;
+	width: 15%;
+}
+
+#heart_fav {
+	z-index:99999;
+	position:fixed;
+	width: 15%;
+	top: 50%;
+	left: 50%
+}
+
+#heart img, #heart_fav img {
+	width: 100%;
 }
 
 /* .btn-success {

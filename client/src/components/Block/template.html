@@ -2,11 +2,11 @@
 	<b-container v-show="loaded">
 		<b-row>
 			<b-col>
-				<div class="loading">Loading...</div>
+				<div class="loading" v-if="!loaded">Loading...</div>
 				<div class="main">
 					<div class="language"></div>
 					<div class="read_manga" ref="read_manga">
-						<img v-if="visible[0]" v-bind:src="'data:image/jpeg;base64,' + img" ref="page_1">
+						<img v-if="visible[0]" v-bind:src="img" id="page_0">
 					</div>
 					<div id="footer">
 						<hr />

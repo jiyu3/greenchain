@@ -25,7 +25,8 @@ li {
 }
 
 .read_manga img {
-	width: 100%;
+	width: 95%;
+	margin-bottom: 20%;
 }
 
 /* Vue Toast start */

@@ -1,7 +1,7 @@
 {
 	"development": {
 		"db": {
-			"base_url": "http://localhost:9999/"
+			"base_url": "http://localhost:9998/"
 		},
 		"deposit_addr": "2N7kV6frZatpmjJsuoEdVqsmhhEmX6jA7Bi"
 	},

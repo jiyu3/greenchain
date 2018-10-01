@@ -40,33 +40,35 @@ router.post('/read', async function (req, res, next) {
 	}
 
 
-	let imgPath = path.join(__dirname, '..', 'blocks', block, 'ja', `${page}.jpg`);
+	console.log(p.lang)
+//	let imgPath = path.join(__dirname, '..', 'blocks', block, 'ja', `${page}.jpg`);
+	let imgPath = `http://localhost:9998/${block}/${p.lang}/${page}.jpg`
 	console.log("imgPath", imgPath)
-	let img = fs.readFileSync(imgPath)
-	res_rpc.result = Object.assign({ error: null }, { img: img })
+//	let img = fs.readFileSync(imgPath)
+	res_rpc.result = Object.assign({ error: null }, { img: imgPath })
 	res.json(JSON.stringify(res_rpc))
 	return true;
 
-	// pay with lightning
-	payWithLightNing(p.fee)
+	// // pay with lightning
+	// payWithLightNing(p.fee)
 
-	// monitor lnd node
-	let interval = setInterval(function () {
-		if (lndPayment() === true) {
-			let fs = require("fs")
-			let path = getImagePath(p.nb_block, p.nb_page) // get image file path from episode number and page number
-			let img = fs.readFileSync(path)
+	// // monitor lnd node
+	// let interval = setInterval(function () {
+	// 	if (lndPayment() === true) {
+	// 		let fs = require("fs")
+	// 		let path = getImagePath(p.nb_block, p.nb_page) // get image file path from episode number and page number
+	// 		let img = fs.readFileSync(path)
 
-			if (img) {
-				// Encode to base64(decode on server)
-				let encodedImage = new Buffer(img, 'binary').toString('base64')
-				return encodedImage
-			} else {
-				payBackToLnd()
-				return false
-			}
-		}
-	}, 100)
+	// 		if (img) {
+	// 			// Encode to base64(decode on server)
+	// 			let encodedImage = new Buffer(img, 'binary').toString('base64')
+	// 			return encodedImage
+	// 		} else {
+	// 			payBackToLnd()
+	// 			return false
+	// 		}
+	// 	}
+	// }, 100)
 })
 
 router.post('/fav', async function (req, res, next) {

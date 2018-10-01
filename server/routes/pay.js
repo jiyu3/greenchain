@@ -59,7 +59,7 @@ router.post('/', function (req, res, next) {
 		metadata.add('macaroon', macaroon3);
 		callback(null, metadata);
 	});
-	
+
 	var creds3 = grpc.credentials.combineChannelCredentials(sslCreds3 , macaroonCreds3);
 	var lightning3 = new lnrpc.Lightning(host3, creds3);
 
@@ -77,12 +77,12 @@ router.post('/', function (req, res, next) {
 	// lightning3 に請求書を作らせる
 	// lightning6 に請求書へ支払わせる
 
-	var addInvoiceRequest = { 
+	var addInvoiceRequest = {
 		memo: invoice_name,
 		value: price
 	};
 	lightning3.addInvoice(addInvoiceRequest, function(invoiceErr, addInvoiceResponse) {
-		if(invoiceErr != undefined){ 
+		if(invoiceErr != undefined){
 			console.error("error: " + invoiceErr);
 			res_rpc.result = Object.assign({ error: invoiceErr }, { code: 1 })
 			res.json(JSON.stringify(res_rpc))
