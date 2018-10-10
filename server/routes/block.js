@@ -9,11 +9,27 @@ let res_rpc = {
 let db = require("../lib/db.class")
 const DB = new db()
 
+let btcpay = require('btcpay')
+
 // let block = require("../controllers/block.class")
 // const BLOCK = new block()
 
 router.get('/', function (req, res, next) {
-	res.send('Be yourself; everything else is taken.')
+//	res.send('Be yourself; everything else is taken.')
+	var keypair = btcpay.crypto.generate_keypair()
+	console.log("keypair", keypair)
+	res.send(keypair)
+})
+
+router.get('/btc', function (req, res, next) {
+	let r;
+	try {
+		let client = new btcpay.BTCPayClient('http://localhost:9998', keypair)
+		r = client
+	} catch (e) {
+		r = e
+	}
+	res.send(r)
 })
 
 router.post('/read', async function (req, res, next) {

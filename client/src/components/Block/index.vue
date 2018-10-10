@@ -26,9 +26,12 @@ export default {
 				window.removeEventListener('scroll', this.event)
 
 				this.rpc("block", "read", { nb_block: this.nb_block, nb_page: nb_page+1, lang: this.$i18n.locale }, false).then(r => {
-					this.rpc("pay", "/", { user_id: 1, content_id: `read_${this.nb_block}_${nb_page+1}` }).then(r => {
-						console.log(r)
-					})
+					console.log(`page${nb_page}, 0.0000001btc paid`)
+
+					// this.rpc("pay", "/", { user_id: 1, content_id: `read_${this.nb_block}_${nb_page+1}` }).then(r => {
+					// 	console.log(r)
+					// })
+					// カラー切替ボタン
 
 					let newImg = document.createElement("img")
 					newImg.src = r.img

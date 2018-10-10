@@ -65,9 +65,11 @@ export default {
 	},
 	methods: {
 		fav() {
-			this.rpc("pay", "/", { user_id: 1, content_id: `like_1_1` }).then(r => {
-				console.log(r)
-			})
+			console.log("0.0000001btc paid")
+
+			// this.rpc("pay", "/", { user_id: 1, content_id: `like_1_1` }).then(r => {
+			// 	console.log(r)
+			// })
 
 			this.nb_fav++
 

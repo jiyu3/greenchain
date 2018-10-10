@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@grpc/proto-loader": "^0.3.0",
-    "grpc": "^1.15.1",
+    "btcpay": "git+https://github.com/tanjalo/node-btcpay.git",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
@@ -16,6 +16,7 @@
     "firebase-admin": "^6.0.0",
     "fs": "0.0.1-security",
     "greenlock-express": "^2.4.6",
+    "grpc": "^1.15.1",
     "hash.js": "^1.1.5",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
