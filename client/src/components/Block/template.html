@@ -4,18 +4,15 @@
 			<b-col>
 				<div class="loading" v-if="!loaded">Loading...</div>
 				<div class="main">
-					<div class="language"></div>
 					<div class="read_manga" ref="read_manga">
-						<img v-if="visible[0]" v-bind:src="img" id="page_0">
+						<template v-for="(e, i) in img">
+							<a :href="e.next" :id="e.id" :ref="e.id">
+								<img :src="e.src">
+							</a>
+						</template>
 					</div>
-					<div id="footer">
-						<hr />
-						<div class="sns">
-							<div class="twitter"><a href="" target="_blank" title="Share on Twitter"><img src="/img/twitter.png" alt="twitter" /></a></div>
-							<div class="facebook"><a href="" target="_blank" title="Share on Facebook"><img src="/img/facebook.png" alt="facebook" /></a></div>
-						</div>
-						<div class="to_top" v-on:scroll="alert(1)"><a href="/">Back to top page</a></div>
-					</div>
+					<router-link v-if="nb_block > 1" :to="prev">Prev</router-link>
+					<router-link v-if="nb_block < 2" :to="next">Next</router-link>
 				</div>
 			</b-col>
 		</b-row>

@@ -24,9 +24,18 @@ li {
 	margin-top: 20px;
 }
 
+#page_0 img {
+	padding-top: 10px !important;
+}
+
 .read_manga img {
-	width: 95%;
-	margin-bottom: 20%;
+	display: block;
+	width: auto;
+	max-width: 100%;
+	max-height: 100vh;
+	margin: 0 auto;
+	padding-top: 50px;
+	margin-bottom: 10px;
 }
 
 /* Vue Toast start */
@@ -41,3 +50,7 @@ li {
 	color: white;
 }
 /* Vue Toast end */
+
+footer {
+	margin-top: 60px;
+}

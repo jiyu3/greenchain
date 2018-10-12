@@ -4,24 +4,15 @@
 		<b-row>
 			<b-col>
 				<div class="latest">
-					<h3>最新エピソード</h3><a class="latest btn btn-success" href="./block/2">第２話</a>
+					<h3>{{ $t("home.latest") }}</h3>
+					<router-link class="latest btn btn-success" to="./block/2">Block 2</router-link>
 				</div>
 				<div class="old">
-					<h4>過去エピソード</h4><a class="btn btn-success" href="./block/1">第１話</a>
+					<h4>{{ $t("home.past") }}</h4>
+					<router-link class="btn btn-success" to="./block/1">Block 1</router-link>
 				</div>
-				<div class="notify">
-					<div class="onesignal-customlink-container"></div>
+				<div class="notify" id="notify">
 				</div>
-			</b-col>
-		</b-row>
-		<hr />
-		<b-row id="buy_lot">
-			<b-col>
-				<div class="donation">
-					<h4>Donation</h4>
-					<div class="bitcoin_addr">bitcoin: mzE1NKoKpUSJgSXVNeRNHz2Kgb4WFkLmFK</div>
-					<div class="ethereum_addr">ethereum: a949f0397167446c805f9fa957a19aa750e4390c</div>
-				</div><a href="mailto:info@midori.fun">contact author</a>
 			</b-col>
 		</b-row>
 	</b-container>

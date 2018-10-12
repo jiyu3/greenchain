@@ -1,5 +1,5 @@
 /* eslint-disable */
-process.title = "glot-client"
+process.title = "gc-client"
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -9,7 +9,7 @@ import store from './store'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-axios.defaults.timeout = 3000;
+axios.defaults.timeout = 100000;
 Vue.use(VueAxios, axios)
 
 import Loading from 'vue-loading-overlay'
@@ -32,7 +32,7 @@ Vue.config.productionTip = false
 Vue.mixin({
 	methods: {
 		rpc(table, method, params = null, loading_overlay = false) {
-			let url = this.$store.getters.db_url + table + "/" + method
+			let url = this.$store.getters.api_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
 				method: "login",
@@ -70,6 +70,12 @@ Vue.mixin({
 					}
 				}, interval)
 			})
+		},
+		overlay_show() {
+			this.$store.state.loader = this.$loading.show()
+		},
+		overlay_hide() {
+			this.$store.state.loader.hide()
 		}
 	}
 })

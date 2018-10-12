@@ -1,40 +1,6 @@
 {
-	"sales": "Buy lottery with bitcoin!",
-	"header": {
-		"buy": "Buy Lot",
-		"result": "See Result"
-	},
 	"home": {
-		"description": "What is GLot",
-		"description_content": "GLot is the web app that you can buy lottery with bitcoin. The reduction rate is much higher than fiat-base one, so you may be able to get much more benefit.",
-		"usage": "Usage",
-		"usage_content": "Click \"Buy Lot\" button on header, go to lottery page, and pay bitcoin to designated address, then you finish to buy lottery. After the recruitment period of lottery, click \"See Result\" to see resutl.",
-		"lot_method": "Lottery method",
-		"lot_method_content": "People who pay more are more likely to become winners. You can pay however much you want. We don't publish how to compute winners in order to be fair.",
-		"buy": "くじを購入する"
-	},
-	"lot": {
-		"description": "The detail of current lottery is as below.",
-		"start": "Start",
-		"end": "End",
-		"prize_description": "Prize is as below.",
-		"prize1": "1st: 50% of total deposit amount",
-		"prize2": "2nd: 20% of total deposit amount",
-		"prize3": "3rd: 15% of total deposit amount",
-		"prize4": "4th: 10% of total deposit amount",
-		"prize5": "5th: 5% of total deposit amount",
-		"deposit": "If you want to buy lottery, send bitcoin to below address.",
-		"none": "There is no lottery available.",
-		"notify": "If you need notification of result, click the below button and allow notification."
-	},
-	"result": {
-		"description": "The winners of 1st lottery are as below.",
-		"1st": "1st",
-		"2nd": "2nd",
-		"3rd": "3rd",
-		"4th": "4th",
-		"5th": "5th",
-		"prize": "The prize of each winner is as below.",
-		"none": "There is no lottery result available."
+		"latest": "Latest Block",
+		"past": "Old Blocks"
 	}
 }

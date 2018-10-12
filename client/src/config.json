@@ -1,14 +1,12 @@
 {
 	"development": {
-		"db": {
+		"api": {
 			"base_url": "http://localhost:9998/"
-		},
-		"deposit_addr": "2N7kV6frZatpmjJsuoEdVqsmhhEmX6jA7Bi"
+		}
 	},
 	"production": {
-		"db": {
-			"base_url": "https://mylot.green/db/"
-		},
-		"deposit_addr": "38LThaF8ohTk2Ji4H2MX5qfxT7QpiSN1oT"
+		"api": {
+			"base_url": "https://midori.fun/api/"
+		}
 	}
 }

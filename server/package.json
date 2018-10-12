@@ -1,10 +1,10 @@
 {
-  "name": "manga-server",
+  "name": "greenchain-server",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "stop": "pkill -f manga-server"
+    "stop": "pkill -f gc-server"
   },
   "dependencies": {
     "@grpc/proto-loader": "^0.3.0",

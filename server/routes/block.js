@@ -15,54 +15,38 @@ let btcpay = require('btcpay')
 // const BLOCK = new block()
 
 router.get('/', function (req, res, next) {
-//	res.send('Be yourself; everything else is taken.')
-	var keypair = btcpay.crypto.generate_keypair()
-	console.log("keypair", keypair)
-	res.send(keypair)
+	res.send('Be yourself; everything else is taken.')
+	// var keypair = btcpay.crypto.generate_keypair()
+	// console.log("keypair", keypair)
+	// res.send(keypair)
 })
 
-router.get('/btc', function (req, res, next) {
-	let r;
-	try {
-		let client = new btcpay.BTCPayClient('http://localhost:9998', keypair)
-		r = client
-	} catch (e) {
-		r = e
-	}
-	res.send(r)
-})
+// router.get('/btc', function (req, res, next) {
+// 	let r;
+// 	try {
+// 		let client = new btcpay.BTCPayClient('http://localhost:9998', keypair)
+// 		r = client
+// 	} catch (e) {
+// 		r = e
+// 	}
+// 	res.send(r)
+// })
 
 router.post('/read', async function (req, res, next) {
 	let p = req.body.params
 	let fs = require("fs")
-	let path = require('path');
 
-	let block = ""
-	let page = ""
-	if (p.nb_block < 10) {
-		block = `0000${p.nb_block}`
-		if (p.nb_page < 10) {
-			page = `${p.nb_block}000${p.nb_page}`
+	let imgPath = __dirname + `/../blocks/${block}/${p.lang}/${page}.jpg`
+	fs.readFile(imgPath, "base64", (err, img) => {
+		if (err) {
+			res.status(500)
+			res_rpc.result = Object.assign({ error: err }, { img: null })
+			res.json(JSON.stringify(res_rpc))
 		} else {
-			page = `${p.nb_block}00${p.nb_page}`
+			res_rpc.result = Object.assign({ error: null }, { img: img })
+			res.json(JSON.stringify(res_rpc))
 		}
-	} else {
-		block = `000${p.nb_block}`
-		if (p.nb_page < 10) {
-			page = `${p.nb_block}000${p.nb_page}`
-		} else {
-			page = `${p.nb_block}00${p.nb_page}`
-		}
-	}
-
-
-	console.log(p.lang)
-//	let imgPath = path.join(__dirname, '..', 'blocks', block, 'ja', `${page}.jpg`);
-	let imgPath = `http://localhost:9998/${block}/${p.lang}/${page}.jpg`
-	console.log("imgPath", imgPath)
-//	let img = fs.readFileSync(imgPath)
-	res_rpc.result = Object.assign({ error: null }, { img: imgPath })
-	res.json(JSON.stringify(res_rpc))
+	})
 	return true;
 
 	// // pay with lightning
@@ -87,32 +71,32 @@ router.post('/read', async function (req, res, next) {
 	// }, 100)
 })
 
-router.post('/fav', async function (req, res, next) {
-	let p = req.body.params
+// router.post('/fav', async function (req, res, next) {
+// 	let p = req.body.params
 
-	DB.insert("fav", { user_id: p.user_id, nb_block: p.nb_block, nb_page: p.nb_page }).then(data => {
-		res_rpc.result = Object.assign({ error: null }, data[0])
-		res.status(200)
-		res.json(JSON.stringify(res_rpc))
-	}).catch(e => {
-		console.log(e)
-		res.status(500)
-		res.json(JSON.stringify(res_rpc))
-	})
-})
+// 	DB.insert("fav", { user_id: p.user_id, nb_block: p.nb_block, nb_page: p.nb_page }).then(data => {
+// 		res_rpc.result = Object.assign({ error: null }, data[0])
+// 		res.status(200)
+// 		res.json(JSON.stringify(res_rpc))
+// 	}).catch(e => {
+// 		console.log(e)
+// 		res.status(500)
+// 		res.json(JSON.stringify(res_rpc))
+// 	})
+// })
 
-router.post('/getfavs', async function (req, res, next) {
-	let p = req.body.params
+// router.post('/getfavs', async function (req, res, next) {
+// 	let p = req.body.params
 
-	DB.select("fav", "user_id, like", `nb_block=${p.nb_block} AND nb_page=${p.nb_page}`).then(data => {
-		res_rpc.result = Object.assign({ error: null }, data[0])
-		res.status(200)
-		res.json(JSON.stringify(res_rpc))
-	}).catch(e => {
-		console.log(e)
-		res.status(500)
-		res.json(JSON.stringify(res_rpc))
-	})
-})
+// 	DB.select("fav", "user_id, like", `nb_block=${p.nb_block} AND nb_page=${p.nb_page}`).then(data => {
+// 		res_rpc.result = Object.assign({ error: null }, data[0])
+// 		res.status(200)
+// 		res.json(JSON.stringify(res_rpc))
+// 	}).catch(e => {
+// 		console.log(e)
+// 		res.status(500)
+// 		res.json(JSON.stringify(res_rpc))
+// 	})
+// })
 
 module.exports = router

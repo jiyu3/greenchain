@@ -1,12 +1,12 @@
 {
-  "name": "glot",
+  "name": "greenchain",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "stop": "pkill -f glot-client"
+    "stop": "pkill -f gc-client"
   },
   "dependencies": {
     "@babel/core": "^7.0.1",

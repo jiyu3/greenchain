@@ -3,5 +3,8 @@
 
 <script>
 export default {
+	mounted() {
+		document.getElementById("notify").appendChild(this.$parent.$refs["btn-notify"])
+	}
 }
 </script>

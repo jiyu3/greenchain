@@ -2,24 +2,36 @@
 	<div id="app">
 		<header>
 			<div>
-				<router-link class="btn" to="/">Green Chain</router-link>
-				<div id="locale">
-					<a href="javascript:void(0)" @click="locale = 'ja'">日本語</a>
-					<a href="javascript:void(0)" @click="locale = 'en'">English</a>
-				</div>
+				<router-link id="logo" class="btn" to="/">Green Chain</router-link>
+				<select v-model="locale">
+					<option value='ja'>日本語</option>
+					<option value='en'>English</option>
+					<option value='zh-cn'>簡体中文</option>
+					<option value='zh-tw'>繁體中文</option>
+					<!-- <option value = 'fr'>français</option> -->
+				</select>
 			</div>
 		</header>
 		<router-view id="main" />
-		<div id="heart_fav" ref="heart_fav">
-			<transition>
-				<img v-if="heart_display" :src="heart" />
-			</transition>
-		</div>
-		<div id="heart" @click="fav">
-			<div style="background:white;">{{ nb_fav }}</div>
-			<img :src="heart" />
-		</div>
-		<!-- <div ref="btn-notify" id="btn-notify" class="onesignal-customlink-container"></div> -->
+
+		<footer id="footer">
+			<b-col>
+				<div class="sns">
+					<a :href="twitter_link" target="_blank" title="Share on Twitter">
+						<img :src="twitter" class="twitter" alt="twitter">
+					</a>
+					<a :href="facebook_link" target="_blank" title="Share on Facebook">
+						<img :src="facebook" class="facebook" alt="facebook">
+					</a>
+				</div>
+
+				<div id="contact">
+					<a href="https://twitter.com/fkazuja" target="_blank">contact</a>
+				</div>
+			</b-col>
+		</footer>
+
+		<div ref="btn-notify" id="btn-notify" class="onesignal-customlink-container"></div>
 	</div>
 </template>
 
@@ -32,64 +44,38 @@ export default {
 				window.navigator.language ||
 				window.navigator.userLanguage ||
 				window.navigator.browserLanguage;
-			if(language.startsWith("en")) {
-				locale = "en"
-			} else if(language.startsWith("ja")) {
+			if(language.startsWith("ja")) {
 				locale = "ja"
 			} else if(language.startsWith("zh-cn")) {
 				locale = "zh-cn"
-			} else {
+			} else if(language.startsWith("zh-cn")) {
 				locale = "zh-tw"
+			} else {
+				locale = "en"
 			}
 		}
 		this.$i18n.locale = locale
 
+		let description = document.getElementById("description").getAttribute("content")
+		let tw =  "https://twitter.com/intent/tweet?text=" + encodeURIComponent(description + "\n" + location.href + "\n" + " #GreenChain")
+		let fb = "https://www.facebook.com/sharer/sharer.php?u=" + location.href + "&t=" + encodeURIComponent(description)
+
 		return {
 			locale: locale,
 			show: true,
-			heart: require("./images/heart.png"),
-			nb_fav: 30,
-			heart_display: false
-			// logo: require("./images/logo.png"),
-			// twitter: require("./images/twitter.png"),
-			// facebook: require("./images/facebook.png"),
-			// twitter_link: null,
-			// facebook_link: null
+			twitter: require("./images/twitter.png"),
+			facebook: require("./images/facebook.png"),
+			twitter_link: tw,
+			facebook_link: fb,
 		}
 	},
 	watch: {
 		locale(v) {
 			localStorage.locale = this.$i18n.locale = v
-			location.reload()
+//			location.reload()
 		}
 	},
 	methods: {
-		fav() {
-			console.log("0.0000001btc paid")
-
-			// this.rpc("pay", "/", { user_id: 1, content_id: `like_1_1` }).then(r => {
-			// 	console.log(r)
-			// })
-
-			this.nb_fav++
-
-			var r1 = Math.floor(Math.random()*100)
-			var r2 = Math.floor(Math.random()*100)
-			var r3 = Math.floor(Math.random()*100)
-
-			this.$refs.heart_fav.setAttribute("style", `
-				z-index:99999;
-				position:fixed;
-				width: 15%;
-				top: ${r2}%;
-				left: ${r3}%;
-			`)
-			this.$refs.heart_fav.width = "200px";
-			this.heart_display = true
-			setTimeout(() => {
-				this.heart_display = false
-			}, 0)
-		}
 	},
 	mounted() {
 	}
@@ -97,87 +83,11 @@ export default {
 </script>
 
 <style>
-html, #app, img, .logo, header {
+/* Common */
+html, #app, img, header {
 	background-color: #e1fae1 !important;
 	font-size: 18px;
 }
-
-.v-leave-active {
-  transition: opacity 0.5s;
-}
-.v-leave-to {
-  opacity: 0.5;
-}
-
-#heart {
-	opacity: 0.7;
-	position: fixed;
-	z-index: 999999;
-	bottom: 0;
-	right: 0;
-	width: 15%;
-}
-
-#heart_fav {
-	z-index:99999;
-	position:fixed;
-	width: 15%;
-	top: 50%;
-	left: 50%
-}
-
-#heart img, #heart_fav img {
-	width: 100%;
-}
-
-/* .btn-success {
-	color: white !important;
-}
-
-.row {
-	margin-top: 20px;
-}
-
-.row:last-child {
-	margin-bottom: 20px;
-}
-
-.back {
-	margin-bottom: 20px;
-	border: 1px solid green !important;
-} */
-
-.logo img {
-	height: 40px;
-}
-
-#locale {
-	font-size: 14px;
-}
-
-/* #btn-notify {
-	display: none;
-}
-
-#main a:not(.btn) {
-	background-color: white;
-	color: green;
-	font-weight: bold !important;
-}
-
-html a:visited {
-	color: darkgreen;
-}
-
-
-footer a, footer a:hover {
-	color: green;
-	font-weight: bold !important;
-}
-
- footer a:not(:first-child) {
-	margin-left: 5px;
-} */
 
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -188,6 +98,78 @@ footer a, footer a:hover {
 	margin-top: 60px;
 }
 
+body {
+	font-size: 3rem;
+	background-color: #e6ffe6;
+}
+
+#locale {
+	font-size: 14px;
+}
+
+/* Heading */
+
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+/* Button */
+
+.btn-success {
+	background-image: -webkit-linear-gradient(top,#5cb85c 0,#419641 100%);
+	background-image: -o-linear-gradient(top,#5cb85c 0,#419641 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#5cb85c),to(#419641));
+	background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #3e8f3e;
+}
+
+.btn-default {
+	text-shadow: 0 1px 0 #fff;
+	background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
+	background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+	background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #000;
+}
+
+/* Anker */
+
+a:link {
+	color: #068900;
+}
+a:visited {
+	color: #015400;
+}
+a:hover {
+	color: #068900;
+}
+a:active {
+	color: #068900;
+}
+
+/* Header */
+
 header {
 	width: 100%;
 	position: fixed;
@@ -197,10 +179,7 @@ header {
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;
-}
-
-header a:hover, header .router-link-exact-active {
-	background-color: white;
+	height: 45px;
 }
 
 header > div {
@@ -232,102 +211,20 @@ header .btn {
 	margin-left: 2%;
 }
 
-/* footer {
-	margin-top: 50px;
+/* footer */
+
+footer {
 	border-top: 1px solid darkgreen;
 }
 
-h3 {
-	margin-bottom: 20px;
+footer + #btn-notify {
+	display: none !important;
 }
 
-.twitter {
+.twitter, .facebook {
 	width: 10%;
-	margin-right: 10px;
-}
-
-.facebook {
-	width: 10%;
+	max-width: 50px;
 	margin-left: 10px;
-}
-
-.sns {
-	margin-top: 20px;
-}
-
-.to_top {
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
-.to_top .btn {
-	background-color: white;
-	border: 1px solid green;
-}
-
-#contact {
-	font-size: 14px;
-	margin-bottom: 20px;
-} */
-
-.btn-success {
-	background-image: -webkit-linear-gradient(top,#5cb85c 0,#419641 100%);
-	background-image: -o-linear-gradient(top,#5cb85c 0,#419641 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#5cb85c),to(#419641));
-	background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-	background-repeat: repeat-x;
-	border-color: #3e8f3e;
-}
-
-.btn-default {
-	text-shadow: 0 1px 0 #fff;
-	background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
-	background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
-	background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-	background-repeat: repeat-x;
-	border-color: #000;
-}
-
-h1 {
-  font-size: 6rem;
-}
-h2 {
-  font-size: 5rem;
-}
-h3 {
-  font-size: 4rem;
-}
-h4 {
-  font-size: 3rem;
-}
-h5 {
-  font-size: 2rem;
-}
-h6 {
-  font-size: 1rem;
-}
-
-body {
-	font-size: 3rem;
-	background-color: #e6ffe6;
-}
-
-a:link {
-	color: #068900;
-}
-a:visited {
-	color: #015400;
-}
-a:hover {
-	color: #068900;
-}
-a:active {
-	color: #068900;
 }
 
 #twitter-widget-1 {

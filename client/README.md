@@ -1,4 +1,4 @@
-# glot
+# Green Chain
 
 ## Project setup
 ```
