@@ -5,7 +5,8 @@
 export default {
 	data() {
 		return {
-			ad_text : `<script>window.gc_ad_position = "bottom right"; window.gc_ad_fps = "5";<\/script><script src="${location.origin}/gc_ad.js"><\/script>`
+			ad_text : `<script>window.gc_ad_position = "bottom right"; window.gc_ad_fps = "5";<\/script><script src="//${location.host}/gc_ad.js"><\/script>`,
+			copy: "Copy to Clipboard"
 		}
 	},
 	methods: {

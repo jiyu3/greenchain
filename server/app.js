@@ -13,7 +13,7 @@ let payRouter = require('./routes/pay')
 
 let app = express()
 
-let whitelist = ['http://localhost:8101', 'https://midori.fun:55012', 'https://midori.fun']
+let whitelist = ['http://localhost:8101', 'https://manga.green:55012', 'https://manga.green']
 let corsOptions = {
 	origin: function (origin, callback) {
 		if (whitelist.indexOf(origin) !== -1) {

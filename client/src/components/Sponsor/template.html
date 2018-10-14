@@ -4,13 +4,15 @@
 		<b-row>
 			<b-col>
 				<div>
-					当サイトの宣伝に協力していただける方は、以下のコードを自分のサイトに埋め込んでください。
+					当サイトの宣伝に協力していただける方は、以下のコードを自分のサイトに埋め込んでください。このページのように画像が表示されます。
 					<div class="gc_ad_text">
 						<b-form-input v-model="ad_text" readonly class="w-75"></b-form-input>
-						<button type="button" class="btn btn-success" v-clipboard:copy="ad_text" v-clipboard:success="onCopy" v-clipboard:error="onCopyError">Copy!</button>
+						<button type="button" class="btn btn-success" v-clipboard:copy="ad_text" v-clipboard:success="onCopy" v-clipboard:error="onCopyError">{{ copy }}</button>
 					</div>
 					window.gc_ad_position を変更すれば、上下左右の位置調整ができます。例えば "top left" と入れると、左上に配置されます。デフォルトは右下です。<br>
 					window.gc_ad_fps を変更すれば、一秒間に何枚絵が切り替わるかを調整できます。デフォルトは５枚／秒です。
+					<br>
+					将来的にはライトニングネットワークを用いた公告機能を実装し、宣伝にインセンティブをつける予定です。
 				</div>
 			</b-col>
 		</b-row>

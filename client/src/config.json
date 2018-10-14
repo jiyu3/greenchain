@@ -6,7 +6,7 @@
 	},
 	"production": {
 		"api": {
-			"base_url": "https://midori.fun/api/"
+			"base_url": "https://manga.green/api/"
 		}
 	}
 }

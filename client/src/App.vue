@@ -74,22 +74,22 @@ export default {
 		locale(v) {
 			localStorage.locale = this.$i18n.locale = v
 		},
-		"$route.name"(v) {
-			let ad = document.getElementById("gc_ad_main")
-			if(ad == void 0) {
-				return false
-			}
-
-			if(v === "Sponsor") {
-				ad.style.display = "block"
-			} else {
-				ad.style.display = "none"
-			}
+		"$route.name"() {
+			this.checkAd()
 		}
 	},
 	methods: {
+		checkAd() {
+			let ad = document.querySelector(".gc_ad_main")
+			if(ad == void 0) {
+				return setTimeout(this.checkAd, 100)
+			}
+
+			ad.style.display = this.$route.name === "Sponsor" ? "block" : "none"
+		}
 	},
 	mounted() {
+		this.checkAd()
 	}
 }
 </script>
@@ -255,7 +255,7 @@ footer + #btn-notify {
 
 /* Ads */
 
-#gc_ad_main {
+.gc_ad_main {
 	display: none;
 }
 </style>
