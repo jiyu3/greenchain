@@ -253,9 +253,9 @@ footer + #btn-notify {
 	margin-right: 10px;
 }
 
-/* ads */
+/* Ads */
 
-.gc_ad {
+#gc_ad_main {
 	display: none;
 }
 </style>

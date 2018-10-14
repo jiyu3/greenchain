@@ -2,8 +2,8 @@ let ad = document.createElement("div")
 ad.id = "gc_ad_main"
 ad.style = `
 	position: fixed;
-	${gc_ad_position.includes("bottom") ? "bottom" : "top" }: 0;
-	${gc_ad_position.includes("right") ? "right" : "left" }: 0;
+	${gc_ad_position.includes("top") ? "top" : "bottom" }: 0;
+	${gc_ad_position.includes("left") ? "left" : "right" }: 0;
 	z-index: 999999;
 	width: 100px;
 	height: 100px;

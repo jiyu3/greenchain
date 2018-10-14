@@ -2,6 +2,10 @@
 	margin: 10px auto;
 }
 
+.gc_ad_text button {
+	margin-bottom: 20px;
+}
+
 /* Vue Toast start */
 .toasted.bubble {
 	background-color: limegreen;

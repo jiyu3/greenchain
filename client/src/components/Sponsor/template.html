@@ -9,6 +9,8 @@
 						<b-form-input v-model="ad_text" readonly class="w-75"></b-form-input>
 						<button type="button" class="btn btn-success" v-clipboard:copy="ad_text" v-clipboard:success="onCopy" v-clipboard:error="onCopyError">Copy!</button>
 					</div>
+					window.gc_ad_position を変更すれば、上下左右の位置調整ができます。例えば "top left" と入れると、左上に配置されます。デフォルトは右下です。<br>
+					window.gc_ad_fps を変更すれば、一秒間に何枚絵が切り替わるかを調整できます。デフォルトは５枚／秒です。
 				</div>
 			</b-col>
 		</b-row>
