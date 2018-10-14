@@ -10,6 +10,7 @@
 					<option value='zh-tw'>繁體中文</option>
 					<!-- <option value = 'fr'>français</option> -->
 				</select>
+				<router-link id="logo" class="btn" to="/sponsor">sponsor</router-link>
 			</div>
 		</header>
 		<router-view id="main" />
@@ -72,7 +73,18 @@ export default {
 	watch: {
 		locale(v) {
 			localStorage.locale = this.$i18n.locale = v
-//			location.reload()
+		},
+		"$route.name"(v) {
+			let ad = document.getElementById("gc_ad_main")
+			if(ad == void 0) {
+				return false
+			}
+
+			if(v === "Sponsor") {
+				ad.style.display = "block"
+			} else {
+				ad.style.display = "none"
+			}
 		}
 	},
 	methods: {
@@ -215,6 +227,7 @@ header .btn {
 
 footer {
 	border-top: 1px solid darkgreen;
+	margin-top: 50px;
 }
 
 footer + #btn-notify {
@@ -238,5 +251,11 @@ footer + #btn-notify {
 
 .fb-like {
 	margin-right: 10px;
+}
+
+/* ads */
+
+.gc_ad {
+	display: none;
 }
 </style>

@@ -38,19 +38,6 @@ li {
 	margin-bottom: 10px;
 }
 
-/* Vue Toast start */
-.toasted.bubble {
-	background-color: limegreen;
-	border-color: limegreen;
-}
-
-.toasted.outline {
-	background-color: #dc3545;
-	border-color: #dc3545;
-	color: white;
-}
-/* Vue Toast end */
-
 footer {
 	margin-top: 60px;
 }

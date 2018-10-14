@@ -19,6 +19,12 @@ export default new Router({
 			name: 'Block',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/Block/index.vue')
+		},
+		{
+			path: '/sponsor',
+			name: 'Sponsor',
+			// lazy load
+			component: () => import(/* webpackChunkName: "about" */ './components/Sponsor/index.vue')
 		}
 	]
 })

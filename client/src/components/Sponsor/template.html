@@ -1,0 +1,16 @@
+<div>
+	<title>Green Chain</title>
+	<b-container>
+		<b-row>
+			<b-col>
+				<div>
+					当サイトの宣伝に協力していただける方は、以下のコードを自分のサイトに埋め込んでください。
+					<div class="gc_ad_text">
+						<b-form-input v-model="ad_text" readonly class="w-75"></b-form-input>
+						<button type="button" class="btn btn-success" v-clipboard:copy="ad_text" v-clipboard:success="onCopy" v-clipboard:error="onCopyError">Copy!</button>
+					</div>
+				</div>
+			</b-col>
+		</b-row>
+	</b-container>
+</div>
