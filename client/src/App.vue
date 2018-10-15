@@ -29,6 +29,12 @@
 				<div id="contact">
 					<a href="https://twitter.com/fkazuja" target="_blank">contact</a>
 				</div>
+
+				<div class="license">
+					<a rel="license" :href="cc_url" target="_blank">
+						<img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+					</a>
+				</div>
 			</b-col>
 		</footer>
 
@@ -68,15 +74,22 @@ export default {
 			facebook: require("./images/facebook.png"),
 			twitter_link: tw,
 			facebook_link: fb,
+			cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.${locale}`
 		}
 	},
 	watch: {
 		locale(v) {
 			localStorage.locale = this.$i18n.locale = v
+			if(v === "zh-tw") {
+				cc_locale = "zh_TW"
+			} else if(v === "zh-cn") {
+				cc_locale = "zh"
+			}
+			this.cc_url = `http://creativecommons.org/licenses/by-nc/4.0/deed.${cc_locale}`
 		},
 		"$route.name"() {
 			this.checkAd()
-		}
+		},
 	},
 	methods: {
 		checkAd() {
@@ -221,6 +234,12 @@ header a:visited {
 
 header .btn {
 	margin-left: 2%;
+}
+
+/* Contents */
+
+.license {
+	margin-top: 10px;
 }
 
 /* footer */
