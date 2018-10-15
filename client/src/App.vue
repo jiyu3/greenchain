@@ -26,7 +26,7 @@
 					</a>
 				</div>
 
-				<div id="contact">
+				<div class="contact">
 					<a href="https://twitter.com/fkazuja" target="_blank">contact</a>
 				</div>
 
@@ -236,12 +236,6 @@ header .btn {
 	margin-left: 2%;
 }
 
-/* Contents */
-
-.license {
-	margin-top: 10px;
-}
-
 /* footer */
 
 footer {
@@ -270,6 +264,10 @@ footer + #btn-notify {
 
 .fb-like {
 	margin-right: 10px;
+}
+
+.license {
+	margin-top: 10px;
 }
 
 /* Ads */
