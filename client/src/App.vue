@@ -181,16 +181,17 @@ h6 {
 /* Anker */
 
 a:link {
-	color: #068900;
+	color: green;
+	font-weight: bold;
 }
 a:visited {
-	color: #015400;
+	color: darkgreen;
 }
 a:hover {
-	color: #068900;
+	color: green !important;
 }
 a:active {
-	color: #068900;
+	color: green;
 }
 
 /* Header */
@@ -218,6 +219,7 @@ header > div {
 
 header a {
 	color:green;
+	font-weight: normal !important;
 }
 
 header a:hover {
