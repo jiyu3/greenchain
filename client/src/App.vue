@@ -182,7 +182,6 @@ h6 {
 
 a:link {
 	color: green;
-	font-weight: bold;
 }
 a:visited {
 	color: darkgreen;
