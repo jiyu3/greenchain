@@ -2,5 +2,11 @@
 	"home": {
 		"latest": "dernier bloc",
 		"past": "vieux bloc"
+	},
+	"sponsor": {
+		"howtoadvertise": "",
+		"place": "",
+		"numberoftimes": "",
+		"incentive": ""
 	}
 }
