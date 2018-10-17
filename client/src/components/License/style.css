@@ -1,0 +1,20 @@
+.gc_ad_text input {
+	margin: 10px auto;
+}
+
+.gc_ad_text button {
+	margin-bottom: 20px;
+}
+
+/* Vue Toast start */
+.toasted.bubble {
+	background-color: limegreen;
+	border-color: limegreen;
+}
+
+.toasted.outline {
+	background-color: #dc3545;
+	border-color: #dc3545;
+	color: white;
+}
+/* Vue Toast end */

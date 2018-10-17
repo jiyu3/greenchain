@@ -25,6 +25,12 @@ export default new Router({
 			name: 'Sponsor',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/Sponsor/index.vue')
+		},
+		{
+			path: '/license',
+			name: 'License',
+			// lazy load
+			component: () => import(/* webpackChunkName: "about" */ './components/License/index.vue')
 		}
 	]
 })
