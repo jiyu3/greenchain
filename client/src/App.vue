@@ -137,7 +137,6 @@ body {
 
 .container {
 	max-width: 800px !important;
-	text-align: left !important;
 }
 
 /* Heading */

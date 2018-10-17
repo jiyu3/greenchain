@@ -16,6 +16,10 @@
 	margin-top: 3vh;
 }
 
+.old a {
+	margin-left: 10px;
+}
+
 .latest a {
 	color: white !important;
 	width: 50%;
