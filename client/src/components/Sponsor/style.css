@@ -1,9 +1,17 @@
+.gc_ad_text {
+	text-align: center !important;
+}
+
 .gc_ad_text input {
 	margin: 10px auto;
 }
 
 .gc_ad_text button {
 	margin-bottom: 20px;
+}
+
+.container {
+	text-align: left;
 }
 
 /* Vue Toast start */
