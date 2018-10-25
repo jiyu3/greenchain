@@ -13,7 +13,6 @@ export default {
 			img: [
 				{
 					id: "page_0",
-//					src: null,
 					src: null,
 					next: "#page_1"
 				}
@@ -54,6 +53,7 @@ export default {
 					this.handleScroll(nb_page+1)
 				}
 				window.addEventListener('scroll', this.event)
+
 
 
 				// this.rpc("block", "read", { nb_block: this.nb_block, nb_page: nb_page+5, lang: this.$i18n.locale }, false).then(r => {
@@ -112,16 +112,7 @@ export default {
 			this.init()
 		}
 	},
-	async created() {
-// 		for(let i=0; i<5; i++) {
-// 			// let r = await this.rpc("block", "read", { nb_block: this.nb_block, nb_page: i, lang: this.$i18n.locale }, true)
-// 			this.img[i] = {
-// 				id: `page_${i}`,
-// //				src: 'data:image.png;base64,' + r.img,
-// 				src: require(`../../images/blocks/${block}/${this.$i18n.locale}/${page}.jpg`),
-// 				next: `#page_${i+1}`
-// 			}
-// 		}
+	created() {
 		this.init()
 	}
 }

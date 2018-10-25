@@ -82,11 +82,13 @@ export default {
 	},
 	watch: {
 		locale(v) {
-			localStorage.locale = this.$i18n.locale = v
+			let cc_locale = localStorage.locale = this.$i18n.locale = v
 			if(v === "zh-tw") {
 				cc_locale = "zh_TW"
 			} else if(v === "zh-cn") {
 				cc_locale = "zh"
+			} else {
+
 			}
 			this.cc_url = `http://creativecommons.org/licenses/by-nc/4.0/deed.${cc_locale}`
 		},
@@ -103,6 +105,38 @@ export default {
 
 			ad.style.display = this.$route.name === "Sponsor" ? "block" : "none"
 		}
+	},
+	created() {
+		(function (i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function () {
+				(i[r].q = i[r].q || []).push (arguments)
+			}, i[r].l = 1 * new Date ();
+			a = s.createElement (o), m = s.getElementsByTagName (o)[0];
+			a.async = 1;
+			a.src   = g;
+			m.parentNode.insertBefore (a, m)
+		}) (window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+		ga ('create', 'UA-123676187-1', 'auto');
+		ga ('send', 'pageview');
+
+		function insertCallback(parent, funcname, callback, ...args) {
+			let oldFunc = parent[funcname] ? parent[funcname] : function (){}
+			parent[funcname] = function() {
+				oldFunc.apply(this, arguments)
+				return callback(...args)
+			}
+		}
+
+		function notify_analytics(l) {
+			let newPage = l.pathname + l.hash
+			ga('set', 'page', newPage)
+			ga('send', 'pageview')
+		}
+
+		insertCallback(window.history, "pushState", notify_analytics, location)
+		insertCallback(window.history, "replaceState", notify_analytics, location)
 	},
 	mounted() {
 		this.checkAd()
