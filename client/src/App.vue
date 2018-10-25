@@ -54,14 +54,14 @@ export default {
 				window.navigator.language ||
 				window.navigator.userLanguage ||
 				window.navigator.browserLanguage;
-			if(language.startsWith("ja")) {
-				locale = "ja"
+			if(language.startsWith("en")) {
+				locale = "en"
 			} else if(language.startsWith("zh-cn")) {
 				locale = "zh-cn"
 			} else if(language.startsWith("zh-cn")) {
 				locale = "zh-tw"
 			} else {
-				locale = "en"
+				locale = "ja"
 			}
 		}
 		this.$i18n.locale = locale
