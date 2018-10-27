@@ -1,0 +1,20 @@
+<div>
+	<b-container v-show="loaded">
+		<b-row>
+			<b-col>
+				<div class="loading" v-if="!loaded">Loading...</div>
+				<div class="main">
+					<div class="read_manga" ref="read_manga">
+						<template v-for="(e, i) in img">
+							<a :href="e.next" :id="e.id" :ref="e.id">
+								<img :src="e.src">
+							</a>
+						</template>
+					</div>
+					<router-link v-if="nb_block > 1" :to="prev">Prev</router-link>
+					<router-link v-if="nb_block < 2" :to="next">Next</router-link>
+				</div>
+			</b-col>
+		</b-row>
+	</b-container>
+</div>
