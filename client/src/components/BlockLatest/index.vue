@@ -85,11 +85,6 @@ export default {
 				id: `page_0`,
 				src: require(`../../images/blocks/${this.nb_block}/${this.$i18n.locale}/0.jpg`),
 				next: `#page_1`
-			},
-			{
-				id: `page_1`,
-				src: require(`../../images/blocks/${this.nb_block}/${this.$i18n.locale}/1.jpg`),
-				next: `#page_2`
 			}]
 
 			this.loaded = true
@@ -98,7 +93,7 @@ export default {
 				window.removeEventListener('scroll', this.event)
 			}
 			this.event = () => {
-				this.handleScroll(1)
+				this.handleScroll(0)
 			}
 			window.addEventListener('scroll', this.event)
 		}
