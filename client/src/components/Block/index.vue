@@ -114,7 +114,11 @@ export default {
 	},
 	async created() {
 		if(this.$route.params.id == "3") {
-			this.$i18n.locale = "ja"
+			if( this.$i18n.locale != "ja" &&
+				this.$i18n.locale != "zh-cn" &&
+				this.$i18n.locale != "zh-tw") {
+				this.$i18n.locale = "ja"
+			}
 		}
 // 		for(let i=0; i<5; i++) {
 // 			// let r = await this.rpc("block", "read", { nb_block: this.nb_block, nb_page: i, lang: this.$i18n.locale }, true)
