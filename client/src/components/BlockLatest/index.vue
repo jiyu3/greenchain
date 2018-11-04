@@ -23,11 +23,16 @@ export default {
 		}
 	},
 	methods: {
-		handleScroll(nb_page) {
-			// display image of invoice anyway(if there is already one, don't do anything)
-			// if paid, replace invoice to manga img, otherwise do nothing
-			// handle next page's event
+		/*
+			localStorage で値作成
+			POST /invoice でインボイス作成
+			POST /invoice/:id/webhook で localStorage 値つきのwebhook作成
 
+			webhookが叩かれたら、DBにlocalStorageでpaidフラグを立てる
+
+			1秒ごとにDBを読み込みに行き、localStorageにpaidフラグが立っていたら画像を規定回数読み込む
+		*/
+		handleScroll(nb_page) {
 			let elem = this.$refs[`page_${nb_page}`][0]
 			if(elem === void 0) {
 				return false;
