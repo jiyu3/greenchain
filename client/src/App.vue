@@ -82,11 +82,13 @@ export default {
 	},
 	watch: {
 		locale(v) {
-			localStorage.locale = this.$i18n.locale = v
+			let cc_locale = localStorage.locale = this.$i18n.locale = v
 			if(v === "zh-tw") {
 				cc_locale = "zh_TW"
 			} else if(v === "zh-cn") {
 				cc_locale = "zh"
+			} else {
+
 			}
 			this.cc_url = `http://creativecommons.org/licenses/by-nc/4.0/deed.${cc_locale}`
 		},

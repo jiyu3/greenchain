@@ -9,7 +9,7 @@ import store from './store'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-axios.defaults.timeout = 100000;
+axios.defaults.timeout = 10 * 60 * 1000; // 10 mins
 Vue.use(VueAxios, axios)
 
 import Loading from 'vue-loading-overlay'
@@ -31,6 +31,9 @@ Vue.config.productionTip = false
 
 Vue.mixin({
 	methods: {
+		pay(satoshi, ln_addr) {
+
+		},
 		rpc(table, method, params = null, loading_overlay = false) {
 			let url = this.$store.getters.api_url + table + "/" + method
 			let data = {
@@ -52,7 +55,16 @@ Vue.mixin({
 						this.axios.post(
 							url, data
 						).then(r => {
-							let result = JSON.parse(r.data).result
+							let result
+							try {
+								result = JSON.parse(r.data).result
+							} catch(e) {
+								if (r.data.result == null) {
+									new Error(e)
+								} else {
+									result = r.data.result
+								}
+							}
 							resolve(result)
 						}).catch(e => {
 							reject(e)

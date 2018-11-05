@@ -1,0 +1,30 @@
+<div>
+	<b-container v-show="loaded">
+		<b-row v-if="!img_loaded">
+			<b-col>
+				<p>{{ $t("block_latest.reqpay") }}</p>
+				<img class="qr payreq" :src="qr.payreq">
+			</b-col>
+		</b-row>
+		<b-row style="margin-top: 20px;" v-if="!img_loaded">
+			<b-col>
+				<p>{{ $t("block_latest.reqchannel") }}</p>
+				<img class="qr node" :src="qr.node">
+			</b-col>
+		</b-row>
+		<b-row v-if="img_loaded">
+			<b-col>
+				<div class="main">
+					<div class="read_manga" ref="read_manga">
+						<template v-for="(e, i) in img">
+							<a :href="e.next" :id="e.id" :ref="e.id">
+								<img :src="e.src">
+							</a>
+						</template>
+					</div>
+					<router-link :to="prev">Prev</router-link>
+				</div>
+			</b-col>
+		</b-row>
+	</b-container>
+</div>

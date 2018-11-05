@@ -1,0 +1,47 @@
+.qr {
+	height: 30vh;
+}
+
+#btn-notify {
+	display: inline-block !important;
+}
+
+#deposit_addr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+#prize {
+	margin-top: 20px;
+}
+
+.copy {
+	margin-top: 10px;
+}
+
+#balance {
+	margin-top: 20px;
+}
+
+#page_0 img {
+	padding-top: 10px !important;
+}
+
+#page_1 img {
+	padding-top: 0 !important;
+}
+
+.read_manga img {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	max-height: 100vh;
+	margin: 0 auto;
+	padding-top: 50px;
+	margin-bottom: 10px;
+}
+
+footer {
+	margin-top: 60px;
+}
