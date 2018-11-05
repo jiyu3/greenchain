@@ -9,7 +9,7 @@ import store from './store'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-axios.defaults.timeout = 100000;
+axios.defaults.timeout = 10 * 60 * 1000; // 10 mins
 Vue.use(VueAxios, axios)
 
 import Loading from 'vue-loading-overlay'
@@ -55,7 +55,16 @@ Vue.mixin({
 						this.axios.post(
 							url, data
 						).then(r => {
-							let result = JSON.parse(r.data).result
+							let result
+							try {
+								result = JSON.parse(r.data).result
+							} catch(e) {
+								if (r.data.result == null) {
+									new Error(e)
+								} else {
+									result = r.data.result
+								}
+							}
 							resolve(result)
 						}).catch(e => {
 							reject(e)

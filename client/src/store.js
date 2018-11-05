@@ -10,6 +10,9 @@ export default new Vuex.Store({
 	mutations: {
 	},
 	getters: {
+		api_url() {
+			return "http://localhost:9998/"
+		}
 	},
 	actions: {
 	}
