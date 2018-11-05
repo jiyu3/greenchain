@@ -6,28 +6,25 @@ let QRCode = require("qrcode")
 
 export default {
 	data() {
-		let block = +this.$route.params.id
+		let block = this.$store.state.block.latest
 		return {
 			loaded: true,
 			qr: {
 				payreq: null,
 				node: null
 			},
-			nb_block: block,
+			block: block,
 			prev: `/block/${block - 1}`,
-			next: `/block/${block + 1}`,
 			img: [],
 			img_loaded: false
 		}
 	},
 	methods: {
 		init() {
-			if(this.$route.params.id == "3") {
-				if( this.$i18n.locale != "ja" &&
-					this.$i18n.locale != "zh-cn" &&
-					this.$i18n.locale != "zh-tw") {
-					this.$i18n.locale = "ja"
-				}
+			if( this.$i18n.locale != "ja" &&
+				this.$i18n.locale != "zh-cn" &&
+				this.$i18n.locale != "zh-tw") {
+				this.$i18n.locale = "ja"
 			}
 
 			this.rpc("cln", "pay", { msatoshi: 2 }, false).then(r => {
@@ -39,7 +36,7 @@ export default {
 				})
 
 				setTimeout(() => {
-					this.rpc("cln", "if_pay_then_read", { id: r.invoice.id, timeout: 11 * 60 * 1000, block: this.nb_block, lang: this.$i18n.locale }, false).then(r => {
+					this.rpc("cln", "if_pay_then_read", { id: r.invoice.id, timeout: 11 * 60 * 1000, block: this.block, lang: this.$i18n.locale }, false).then(r => {
 						r.img.forEach((e, i) => {
 							this.img.push({
 								id: `page_${i+1}`,

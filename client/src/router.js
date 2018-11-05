@@ -21,7 +21,7 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "about" */ './components/Block/index.vue')
 		},
 		{
-			path: '/block_latest/:id',
+			path: '/block_latest',
 			name: 'BlockLatest',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/BlockLatest/index.vue')

@@ -8,7 +8,7 @@ export default {
 		return {
 			loaded: false,
 			visible: [true],
-			nb_block: block,
+			block: block,
 			event: null,
 			img: [
 				{
@@ -36,7 +36,7 @@ export default {
 
 				let src = null
 				try {
-					src = require(`../../images/blocks/${this.nb_block}/${this.$i18n.locale}/${nb_page+1}.jpg`)
+					src = require(`../../images/blocks/${this.block}/${this.$i18n.locale}/${nb_page+1}.jpg`)
 				} catch(e) {
 					document.getElementById(`page_${nb_page}`).href = "#footer"
 					return false
@@ -53,24 +53,6 @@ export default {
 					this.handleScroll(nb_page+1)
 				}
 				window.addEventListener('scroll', this.event)
-
-
-
-				// this.rpc("block", "read", { nb_block: this.nb_block, nb_page: nb_page+5, lang: this.$i18n.locale }, false).then(r => {
-				// 	console.log("loaded: " + `page_${nb_page+5}`)
-				// 	this.img.push({
-				// 		id: `page_${nb_page+5}`,
-				// 		src: 'data:image.png;base64,' + r.img,
-				// 		next: `#page_${nb_page+6}`
-				// 	})
-
-				// 	this.event = () => {
-				// 		this.handleScroll(nb_page+1)
-				// 	}
-				// 	window.addEventListener('scroll', this.event)
-				// }).catch(e => {
-				// 	document.getElementById(`page_${nb_page}`).href = "#footer"
-				// })
 			}
 		},
 		init() {
@@ -79,12 +61,12 @@ export default {
 			this.img = []
 			this.img = [{
 				id: `page_0`,
-				src: require(`../../images/blocks/${this.nb_block}/${this.$i18n.locale}/0.jpg`),
+				src: require(`../../images/blocks/${this.block}/${this.$i18n.locale}/0.jpg`),
 				next: `#page_1`
 			},
 			{
 				id: `page_1`,
-				src: require(`../../images/blocks/${this.nb_block}/${this.$i18n.locale}/1.jpg`),
+				src: require(`../../images/blocks/${this.block}/${this.$i18n.locale}/1.jpg`),
 				next: `#page_2`
 			}]
 
@@ -106,13 +88,19 @@ export default {
 		"$route.params.id"(v) {
 			window.scrollTo(0, 0)
 			v = +v
-			this.nb_block = v
+			this.block = v
 			this.prev = `/block/${v - 1}`
 			this.next = `/block/${v + 1}`
 			this.init()
+		},
+		block(v) {
+			if(v == this.$store.state.block.latest) {
+				console.log("moved to " + v)
+				this.$router.push("/block_latest")
+			}
 		}
 	},
-	created() {
+	async created() {
 		this.init()
 	}
 }

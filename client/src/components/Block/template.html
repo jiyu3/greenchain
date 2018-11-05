@@ -11,8 +11,8 @@
 							</a>
 						</template>
 					</div>
-					<router-link v-if="nb_block > 1" :to="prev">Prev</router-link>
-					<router-link v-if="nb_block < 3" :to="next">Next</router-link>
+					<router-link v-if="block > 1" :to="prev">Prev | </router-link>
+					<router-link :to="next">Next</router-link>
 				</div>
 			</b-col>
 		</b-row>

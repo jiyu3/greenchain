@@ -5,7 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		loader: null
+		loader: null,
+		block: {
+			latest: 3
+		}
 	},
 	mutations: {
 	},
