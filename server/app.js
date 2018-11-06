@@ -1,4 +1,4 @@
-process.env.PORT = 9998
+process.env.PORT = 55000
 process.title = "gc-server"
 
 let createError = require('http-errors')
@@ -14,7 +14,7 @@ let clnRouter = require('./routes/cln')
 
 let app = express()
 
-let whitelist = ['http://localhost:8101', 'https://manga.green:55012', 'https://manga.green']
+let whitelist = ['http://localhost:8101', 'https://manga.green']
 let corsOptions = {
 	origin: function (origin, callback) {
 		if (whitelist.indexOf(origin) !== -1) {
@@ -25,8 +25,7 @@ let corsOptions = {
 	}
 }
 app.use(cors(corsOptions))
-app.use(cors())
-
+//app.use(cors())
 
 app.use(logger('dev'))
 app.use(express.json())

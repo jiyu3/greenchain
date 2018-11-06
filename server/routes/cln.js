@@ -15,8 +15,13 @@ const CLN = new cln()
 let util = require("../lib/util.class")
 const UTIL = new util()
 
-let CHARGE = `http://api-token:midori@test.cln.green:9112`
-let NODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
+// testnet
+const CHARGE = `http://api-token:midori@test.cln.green:9112`
+const NODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
+
+// mainnet
+// const CHARGE = `http://api-token:d284b26fff3fc441e275a0048d8594a02641decd@cln.green:9112`
+// const NODE = `02e4e5ab8caa1c4af2b54efdd19ab41a2ff2c1a9a352644794b69be14e22a5f683@cln.green:9735`
 
 let request = require("request")
 
@@ -32,6 +37,7 @@ router.post('/pay', async (req, res, next) => {
 	let p = req.body.params
 
 	request.post(`${CHARGE}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
+		console.log("invoice")
 		if (err) {
 			res_rpc.result = { error: err }
 		} else {
@@ -47,10 +53,21 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 	let url = `${CHARGE}/invoice/${p.id}/wait?timeout=${p.timeout}`
 
 	request.get(url, (err, resp, body) => {
-		console.log(body)
+		if (resp.statusCode == 402) {
+			res_rpc.result = Object.assign({ error: "Timeout: 402 payment required" }, { img: null })
+			res.json(JSON.stringify(res_rpc))
+			return false
+		}
+
 		body = JSON.parse(body)
 		if (body.msatoshi_received < fee.manga) {
-			res_rpc.result = Object.assign({ error: "insufficient fee" }, { img: null })
+			res_rpc.result = Object.assign({ error: "Insufficient fee" }, { img: null })
+			res.json(JSON.stringify(res_rpc))
+			return false
+		}
+
+		if (resp.statusCode != 200) {
+			res_rpc.result = Object.assign({ error: "Unknown error" }, { img: null })
 			res.json(JSON.stringify(res_rpc))
 			return false
 		}
