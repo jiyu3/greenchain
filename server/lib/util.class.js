@@ -23,11 +23,11 @@ module.exports = class UTIL {
 		return new Promise((resolve, reject) => {
 			this.fs.readFile(file, encode, (err, data) => {
 				if (err) {
-					reject(err);
-					return;
+					reject(err)
+					return
 				}
-				resolve(data);
-			});
-		});
+				resolve(data)
+			})
+		})
 	}
 }

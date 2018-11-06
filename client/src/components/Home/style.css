@@ -23,10 +23,9 @@
 
 .latest a {
 	color: white !important;
-	width: 50%;
+	width: 100%;
 	font-size: 6vw;
 	margin-top: 1vh;
-	max-width: 350px;
 }
 
 .old a {

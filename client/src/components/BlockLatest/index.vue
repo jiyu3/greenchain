@@ -9,6 +9,8 @@ export default {
 		let block = this.$store.state.block.latest
 		return {
 			loaded: true,
+			payreq: null,
+			node: null,
 			qr: {
 				payreq: null,
 				node: null
@@ -27,10 +29,13 @@ export default {
 				this.$i18n.locale = "ja"
 			}
 
-			this.rpc("cln", "pay", { msatoshi: 2 }, false).then(r => {
+			this.rpc("cln", "pay", { msatoshi: 10000 }, false).then(r => {
+				console.log(r)
+				this.payreq = "lightning:" + r.invoice.payreq
 				QRCode.toDataURL(r.invoice.payreq, (err, qr) => {
 					this.qr.payreq = qr
 				})
+				this.node = "lightning:" + r.node
 				QRCode.toDataURL(r.node, (err, qr) => {
 					this.qr.node = qr
 				})

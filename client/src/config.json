@@ -1,12 +1,12 @@
 {
 	"development": {
 		"api": {
-			"base_url": "http://localhost:9998/"
+			"base_url": "http://localhost:55000/"
 		}
 	},
 	"production": {
 		"api": {
-			"base_url": "https://manga.green/api/"
+			"base_url": "https://manga.green:55000/"
 		}
 	}
 }
