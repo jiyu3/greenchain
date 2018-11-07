@@ -4,8 +4,9 @@
 			<div>
 				<router-link id="logo" class="btn" to="/">Green Chain</router-link>
 				<select v-model="locale">
-					<option value='ja'>日本語</option>
 					<option value='en'>English</option>
+					<option value='fr'>Français</option>
+					<option value='ja'>日本語</option>
 					<option value='zh-cn'>簡体中文</option>
 					<option value='zh-tw'>繁體中文</option>
 					<!-- <option value = 'fr'>français</option> -->
