@@ -53,6 +53,12 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 	let url = `${CHARGE}/invoice/${p.id}/wait?timeout=${p.timeout}`
 
 	request.get(url, (err, resp, body) => {
+		if (!resp) {
+			res_rpc.result = Object.assign({ error: "Response is empty" }, { img: null })
+			res.json(JSON.stringify(res_rpc))
+			return false
+		}
+
 		if (resp.statusCode == 402) {
 			res_rpc.result = Object.assign({ error: "Timeout: 402 payment required" }, { img: null })
 			res.json(JSON.stringify(res_rpc))
