@@ -16,12 +16,12 @@ let util = require("../lib/util.class")
 const UTIL = new util()
 
 // testnet
-const CHARGE = `http://api-token:midori@test.cln.green:9112`
-const NODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
+// const CHARGE = `http://api-token:midori@test.cln.green:9112`
+// const NODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
 
 // mainnet
-// const CHARGE = `http://api-token:d284b26fff3fc441e275a0048d8594a02641decd@cln.green:9112`
-// const NODE = `02e4e5ab8caa1c4af2b54efdd19ab41a2ff2c1a9a352644794b69be14e22a5f683@cln.green:9735`
+const CHARGE = `http://api-token:d284b26fff3fc441e275a0048d8594a02641decd@cln.green:9112`
+const NODE = `02e4e5ab8caa1c4af2b54efdd19ab41a2ff2c1a9a352644794b69be14e22a5f683@cln.green:9735`
 
 let request = require("request")
 
@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 })
 
 let fee = {
-	manga: 2
+	manga: 135
 }
 
 router.post('/pay', async (req, res, next) => {

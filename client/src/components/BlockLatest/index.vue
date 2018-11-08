@@ -29,7 +29,7 @@ export default {
 				this.$i18n.locale = "ja"
 			}
 
-			this.rpc("cln", "pay", { msatoshi: 10000 }, false).then(r => {
+			this.rpc("cln", "pay", { msatoshi: 135000 }, false).then(r => {
 				console.log(r)
 				this.payreq = "lightning:" + r.invoice.payreq
 				QRCode.toDataURL(r.invoice.payreq, (err, qr) => {
