@@ -163,7 +163,6 @@ export default {
 		og_img_origin.parentNode.removeChild(og_img_origin);
 		this.checkAd()
 		this.checkOgImg()
-		console.log(this.$loading)
 	}
 }
 </script>
