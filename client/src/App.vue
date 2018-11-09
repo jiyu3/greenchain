@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
 		<header>
+			<meta property="og:image" content="http://manga.green/og_image.jpg" ref="og_image" />
 			<div>
 				<router-link id="logo" class="btn" to="/">Green Chain</router-link>
 				<select v-model="locale">
@@ -78,7 +79,8 @@ export default {
 			facebook: require("./images/facebook.png"),
 			twitter_link: tw,
 			facebook_link: fb,
-			cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.${locale}`
+			cc_url: `http://creativecommons.org/licenses/by-nc/4.0/deed.${locale}`,
+			og_image: "http://manga.green/og_image.jpg"
 		}
 	},
 	watch: {
@@ -95,9 +97,23 @@ export default {
 		},
 		"$route.name"(v) {
 			this.checkAd()
+			this.checkOgImg()
+		},
+		"$route.params.id"(v) {
+			this.checkOgImg()
 		}
 	},
 	methods: {
+		checkOgImg() {
+			let name = this.$route.name
+			if (name === "Block") {
+				let id = this.$route.params.id
+				this.og_image = "http://manga.green" + require(`./images/blocks/${id}/ja/0.jpg`)
+			} else {
+				this.og_image = "http://manga.green/og_image.jpg"
+			}
+			this.$refs.og_image.setAttribute("content", this.og_image)
+		},
 		checkAd() {
 			let ad = document.querySelector(".gc_ad_main")
 			if(ad == void 0) {
@@ -140,7 +156,10 @@ export default {
 		insertCallback(window.history, "replaceState", notify_analytics, location)
 	},
 	mounted() {
+		let og_img_origin = document.getElementById("og_image_origin")
+		og_img_origin.parentNode.removeChild(og_img_origin);
 		this.checkAd()
+		this.checkOgImg()
 	}
 }
 </script>
