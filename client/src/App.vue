@@ -93,9 +93,9 @@ export default {
 			}
 			this.cc_url = `http://creativecommons.org/licenses/by-nc/4.0/deed.${cc_locale}`
 		},
-		"$route.name"() {
+		"$route.name"(v) {
 			this.checkAd()
-		},
+		}
 	},
 	methods: {
 		checkAd() {

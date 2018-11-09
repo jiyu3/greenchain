@@ -21,7 +21,7 @@ const UTIL = new util()
 
 // mainnet
 const CHARGE = `http://api-token:d284b26fff3fc441e275a0048d8594a02641decd@cln.green:9112`
-const NODE = `02e4e5ab8caa1c4af2b54efdd19ab41a2ff2c1a9a352644794b69be14e22a5f683@cln.green:9735`
+const NODE = `02009947c197575f5a948e1e4343c41dc2e6122a9bd644629afb919f30e1115ff8@cln.green:9735`
 
 let request = require("request")
 
