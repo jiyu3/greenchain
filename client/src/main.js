@@ -31,10 +31,7 @@ Vue.config.productionTip = false
 
 Vue.mixin({
 	methods: {
-		pay(satoshi, ln_addr) {
-
-		},
-		rpc(table, method, params = null, loading_overlay = false) {
+		rpc(table, method, params = null, loading_overlay = false, test = false) {
 			let url = this.$store.getters.api_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
@@ -44,6 +41,9 @@ Vue.mixin({
 			let error_count = 0
 			let interval = 100
 
+			if (test) {
+				data.params.test = true
+			}
 			if (loading_overlay) {
 				this.$store.state.loader = this.$loading.show()
 			}

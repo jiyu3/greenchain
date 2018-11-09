@@ -40,6 +40,9 @@
 					 or
 					<router-link to="/license">Green License</router-link>
 				</div>
+				<div>
+					<router-link class="btn" id="secret_btn" to="/block_latest_test">test</router-link>
+				</div>
 			</b-col>
 		</footer>
 
@@ -160,6 +163,7 @@ export default {
 		og_img_origin.parentNode.removeChild(og_img_origin);
 		this.checkAd()
 		this.checkOgImg()
+		console.log(this.$loading)
 	}
 }
 </script>
@@ -336,5 +340,19 @@ footer + #btn-notify {
 
 .gc_ad_main {
 	display: none;
+}
+
+/* ??? */
+
+#secret_btn {
+	margin-top: 30px;
+	color:#e1fae1;
+	width: 90vw;
+	height: 200px;
+	font-size: 100px;
+}
+
+#secret_btn:hover {
+	background-color: white;
 }
 </style>

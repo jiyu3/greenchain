@@ -29,7 +29,14 @@ export default {
 				this.$i18n.locale = "ja"
 			}
 
-			this.rpc("cln", "pay", { msatoshi: 135000 }, false).then(r => {
+			let test = false
+			let msatoshi = 135000
+			if(this.$route.name === "BlockLatestTest") {
+				test = true
+				msatoshi = 1000
+			}
+
+			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test).then(r => {
 				console.log(r)
 				this.payreq = "lightning:" + r.invoice.payreq
 				QRCode.toDataURL(r.invoice.payreq, (err, qr) => {
@@ -40,18 +47,42 @@ export default {
 					this.qr.node = qr
 				})
 
+				let param_common = {
+					id: r.invoice.id,
+					timeout: 11 * 60 * 1000,
+					block: this.block,
+					lang: this.$i18n.locale
+				}
 				setTimeout(() => {
-					this.rpc("cln", "if_pay_then_read", { id: r.invoice.id, timeout: 11 * 60 * 1000, block: this.block, lang: this.$i18n.locale }, false).then(r => {
-						r.img.forEach((e, i) => {
-							this.img.push({
-								id: `page_${i+1}`,
-								src: 'data:image/jpeg;base64,' + r.img[i],
-								next: `#page_${i+2}`
-							})
-						})
+					let p1 = Object.assign({ img: [0, -1] }, param_common)
+					this.rpc("cln", "if_pay_then_read", p1, false, test).then(r => {
 						this.img_loaded = true
+
+						let loader = this.$loading.show()
+						let p2 = Object.assign({ img: [0, 2] }, param_common)
+						this.rpc("cln", "if_pay_then_read", p2, true, test).then(r => {
+							for(let i=0; i<r.img.length; i++) {
+								this.img.push({
+									id: `page_${i+1}`,
+									src: 'data:image/jpeg;base64,' + r.img[i],
+									next: `#page_${i+2}`
+								})
+							}
+							loader.hide()
+						})
+
+						let p3 = Object.assign({ img: [3] }, param_common)
+						this.rpc("cln", "if_pay_then_read", p3, false, test).then(r => {
+							for(let i=3; i<r.img.length; i++) {
+								this.img.push({
+									id: `page_${i+1}`,
+									src: 'data:image/jpeg;base64,' + r.img[i],
+									next: `#page_${i+2}`
+								})
+							}
+						})
 					})
-				}, 0)
+				}, 5000)
 			}).catch(e => {
 				console.log(e)
 			})

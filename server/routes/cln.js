@@ -16,8 +16,8 @@ let util = require("../lib/util.class")
 const UTIL = new util()
 
 // testnet
-// const CHARGE = `http://api-token:midori@test.cln.green:9112`
-// const NODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
+const tCHARGE = `http://api-token:midori@test.cln.green:9112`
+const tNODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
 
 // mainnet
 const CHARGE = `http://api-token:d284b26fff3fc441e275a0048d8594a02641decd@cln.green:9112`
@@ -29,19 +29,23 @@ router.get('/', function (req, res, next) {
 	res.send('Be yourself; everything else is taken.')
 })
 
-let fee = {
-	manga: 135
+let FEE = {
+	manga: 135000
+}
+let tFEE = {
+	manga: 1000
 }
 
 router.post('/pay', async (req, res, next) => {
 	let p = req.body.params
+	let charge = p.test ? tCHARGE : CHARGE
+	let node = p.test ? tNODE : NODE
 
-	request.post(`${CHARGE}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
-		console.log("invoice")
+	request.post(`${charge}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
 		if (err) {
 			res_rpc.result = { error: err }
 		} else {
-			res_rpc.result = { error: null, invoice: JSON.parse(body), node: NODE }
+			res_rpc.result = { error: null, invoice: JSON.parse(body), node: node }
 		}
 		res.send(JSON.stringify(res_rpc))
 	});
@@ -50,7 +54,9 @@ router.post('/pay', async (req, res, next) => {
 router.post('/if_pay_then_read', async (req, res, next) => {
 	let p = req.body.params
 	let fs = require("fs")
-	let url = `${CHARGE}/invoice/${p.id}/wait?timeout=${p.timeout}`
+	let charge = p.test ? tCHARGE : CHARGE
+	let fee = p.test ? tFEE : FEE
+	let url = `${charge}/invoice/${p.id}/wait?timeout=${p.timeout}`
 
 	request.get(url, (err, resp, body) => {
 		if (!resp) {
@@ -78,10 +84,15 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 			return false
 		}
 
-		let i = 0
 		let images = []
 		let promises = []
-		while (1) {
+		if (p.img[1] == null) {
+			p.img[1] = Infinity
+		}
+
+		console.log(p.img)
+		for (let i = p.img[0]; i <= p.img[1]; i++) {
+			console.log(i)
 			let imgPath = __dirname + `/../blocks/${p.block}/${p.lang}/${i}.jpg`
 			if (fs.existsSync(imgPath)) {
 				let index = i.toString()
@@ -90,7 +101,6 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 						images[index] = img
 					})
 				)
-				i++
 			} else {
 				break;
 			}
@@ -102,6 +112,5 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 		})
 	})
 })
-
 
 module.exports = router
