@@ -4,15 +4,17 @@
 			<b-col>
 				<p>{{ $t("block_latest.reqpay") }}</p>
 				<a :href="payreq">
-					<img class="qr payreq" :src="qr.payreq">
+					<canvas ref="payreq"></canvas>
+					<!-- <img ref="payreq" class="qr payreq" :src="qr.payreq"> -->
 				</a>
 			</b-col>
 		</b-row>
 		<b-row style="margin-top: 20px;" v-if="!img_loaded">
 			<b-col>
 				<p>{{ $t("block_latest.reqchannel") }}</p>
-				<a :href="payreq">
-					<img class="qr node" :src="qr.node">
+				<a :href="node">
+					<canvas ref="node"></canvas>
+					<!-- <img ref="node" class="qr node" :src="qr.node"> -->
 				</a>
 			</b-col>
 		</b-row>

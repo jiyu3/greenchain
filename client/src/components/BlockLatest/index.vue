@@ -2,7 +2,7 @@
 <style src="./style.css" scoped></style>
 
 <script>
-let QRCode = require("qrcode")
+const QRious = require('qrious');
 
 export default {
 	data() {
@@ -38,14 +38,22 @@ export default {
 
 			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test).then(r => {
 				console.log(r)
+
 				this.payreq = "lightning:" + r.invoice.payreq
-				QRCode.toDataURL(r.invoice.payreq, (err, qr) => {
-					this.qr.payreq = qr
-				})
+				new QRious({
+					element: this.$refs.payreq,
+					value: r.invoice.payreq,
+					size: 190,
+					foreground: 'darkgreen',
+				});
+
 				this.node = "lightning:" + r.node
-				QRCode.toDataURL(r.node, (err, qr) => {
-					this.qr.node = qr
-				})
+				new QRious({
+					element: this.$refs.node,
+					value: r.node,
+					size: 190,
+					foreground: 'darkgreen',
+				});
 
 				let param_common = {
 					id: r.invoice.id,
