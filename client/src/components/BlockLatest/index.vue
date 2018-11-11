@@ -45,6 +45,7 @@ export default {
 					value: r.invoice.payreq,
 					size: 190,
 					foreground: 'darkgreen',
+					background: '#EEFFEE'
 				});
 
 				this.node = "lightning:" + r.node
@@ -53,6 +54,7 @@ export default {
 					value: r.node,
 					size: 190,
 					foreground: 'darkgreen',
+					background: '#EEFFEE'
 				});
 
 				let param_common = {
