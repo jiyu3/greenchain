@@ -14,11 +14,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		api_url() {
-			if (process.env.NODE_ENV === "production") {
-				return "https://manga.green:55001/"
-			} else {
-				return "http://localhost:55000/"
-			}
+			return "https://manga.green:55001/"
 		}
 	},
 	actions: {

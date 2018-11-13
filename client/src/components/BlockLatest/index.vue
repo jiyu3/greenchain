@@ -26,7 +26,9 @@ export default {
 			if( this.$i18n.locale != "ja" &&
 				this.$i18n.locale != "zh-cn" &&
 				this.$i18n.locale != "zh-tw") {
-				this.$i18n.locale = "ja"
+				alert("Not translated into the language you specified yet.")
+				localStorage.locale = this.$i18n.locale = "ja"
+				return location.reload()
 			}
 
 			let test = false
@@ -66,7 +68,7 @@ export default {
 					this.rpc("read", "if_pay_then_read", p1, false, test).then(r => {
 						this.img_loaded = true
 
-						let loader = this.$loading.show()
+						this.$store.state.loader = this.$loading.show()
 						let p2 = Object.assign({ img: [0, 2] }, param_common)
 						this.rpc("read", "if_pay_then_read", p2, true, test).then(r => {
 							for(let i=0; i<r.img.length; i++) {
@@ -76,7 +78,7 @@ export default {
 									next: `#page_${i+2}`
 								})
 							}
-							loader.hide()
+							this.$store.state.loader.hide()
 						})
 
 						let p3 = Object.assign({ img: [3] }, param_common)
