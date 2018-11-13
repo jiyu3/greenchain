@@ -36,7 +36,7 @@ export default {
 				msatoshi = 1000
 			}
 
-			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test).then(r => {
+			this.rpc("read", "pay", { msatoshi: msatoshi }, true, test).then(r => {
 				console.log(r)
 
 				this.payreq = "lightning:" + r.invoice.payreq
@@ -63,12 +63,12 @@ export default {
 				}
 				setTimeout(() => {
 					let p1 = Object.assign({ img: [0, -1] }, param_common)
-					this.rpc("cln", "if_pay_then_read", p1, false, test).then(r => {
+					this.rpc("read", "if_pay_then_read", p1, false, test).then(r => {
 						this.img_loaded = true
 
 						let loader = this.$loading.show()
 						let p2 = Object.assign({ img: [0, 2] }, param_common)
-						this.rpc("cln", "if_pay_then_read", p2, true, test).then(r => {
+						this.rpc("read", "if_pay_then_read", p2, true, test).then(r => {
 							for(let i=0; i<r.img.length; i++) {
 								this.img.push({
 									id: `page_${i+1}`,
@@ -80,7 +80,7 @@ export default {
 						})
 
 						let p3 = Object.assign({ img: [3] }, param_common)
-						this.rpc("cln", "if_pay_then_read", p3, false, test).then(r => {
+						this.rpc("read", "if_pay_then_read", p3, false, test).then(r => {
 							for(let i=3; i<r.img.length; i++) {
 								this.img.push({
 									id: `page_${i+1}`,

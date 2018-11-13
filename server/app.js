@@ -8,9 +8,7 @@ let cookieParser = require('cookie-parser')
 let logger = require('morgan')
 let cors = require('cors')
 
-let blockRouter = require('./routes/block')
-let payRouter = require('./routes/pay')
-let clnRouter = require('./routes/cln')
+let readRouter = require('./routes/read')
 
 let app = express()
 
@@ -34,9 +32,7 @@ app.use(cookieParser())
 //app.use(express.static(path.join(__dirname, 'public')))
 //app.use(express.static('blocks'));
 
-app.use('/block', blockRouter)
-app.use('/pay', payRouter)
-app.use('/cln', clnRouter)
+app.use('/read', readRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
