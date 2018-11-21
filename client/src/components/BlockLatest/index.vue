@@ -36,7 +36,7 @@ export default {
 				msatoshi = 1000
 			}
 
-			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test, 3000).then(r => {
+			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test, 10000).then(r => {
 				console.log(r)
 
 				this.payreq = "lightning:" + r.invoice.payreq
