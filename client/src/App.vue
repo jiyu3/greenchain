@@ -41,7 +41,7 @@
 					<router-link to="/license">Green License</router-link>
 				</div>
 				<div>
-					<router-link class="btn" id="secret_btn" to="/block_latest_test">test</router-link>
+					<a href="/block_latest_test" id="secret_btn" class="btn">test</a>
 				</div>
 			</b-col>
 		</footer>
