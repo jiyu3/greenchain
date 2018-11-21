@@ -2,6 +2,9 @@
 <style src="./style.css" scoped></style>
 
 <script>
+import ChargeClient from 'lightning-charge-client'
+const charge = new ChargeClient('http://localhost:9112', '[API-TOKEN]')
+
 const QRious = require('qrious');
 
 export default {
