@@ -41,6 +41,7 @@ Vue.mixin({
 			let error_count = 0
 			let interval = 100
 
+			let default_timeout = axios.defaults.timeout
 			if (timeout) {
 				axios.defaults.timeout = timeout
 			}
@@ -76,10 +77,12 @@ Vue.mixin({
 							if (this.$store.state.loader != null) {
 								this.$store.state.loader.hide()
 							}
+							axios.defaults.timeout = default_timeout
 						})
 					} else {
 						if (++error_count >= (3000 / interval)) {
 							clearInterval(loop)
+							axios.defaults.timeout = default_timeout
 							this.$router.push("/")
 						}
 						params.token = this.$store.state.token
