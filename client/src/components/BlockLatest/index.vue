@@ -23,10 +23,13 @@ export default {
 	},
 	methods: {
 		init() {
+			console.log("this.$i18n.locale", this.$i18n.locale)
 			if( this.$i18n.locale != "ja" &&
 				this.$i18n.locale != "zh-cn" &&
 				this.$i18n.locale != "zh-tw") {
-				this.$i18n.locale = "ja"
+				alert("This block is not translated the language you chose.")
+				localStorage.locale = "ja"
+				return location.reload()
 			}
 
 			let test = false
