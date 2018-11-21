@@ -41,7 +41,7 @@ export default {
 				msatoshi = 1000
 			}
 
-			this.rpc("read", "pay", { msatoshi: msatoshi }, true, test).then(r => {
+			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test, 10000).then(r => {
 				console.log(r)
 
 				this.payreq = "lightning:" + r.invoice.payreq
@@ -50,6 +50,7 @@ export default {
 					value: r.invoice.payreq,
 					size: 190,
 					foreground: 'darkgreen',
+					background: '#EEFFEE'
 				});
 
 				this.node = "lightning:" + r.node
@@ -58,13 +59,15 @@ export default {
 					value: r.node,
 					size: 190,
 					foreground: 'darkgreen',
+					background: '#EEFFEE'
 				});
 
 				let param_common = {
 					id: r.invoice.id,
 					timeout: 11 * 60 * 1000,
 					block: this.block,
-					lang: this.$i18n.locale
+					lang: this.$i18n.locale,
+					token: this.$route.query.token
 				}
 				setTimeout(() => {
 					let p1 = Object.assign({ img: [0, -1] }, param_common)
