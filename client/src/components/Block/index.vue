@@ -44,7 +44,6 @@ export default {
 
 				this.img.push({
 					id: `page_${nb_page+1}`,
-//					src: 'data:image.png;base64,' + r.img,
 					src: src,
 					next: `#page_${nb_page+2}`
 				})
@@ -79,6 +78,16 @@ export default {
 				this.handleScroll(1)
 			}
 			window.addEventListener('scroll', this.event)
+		},
+		checkBlock(v) {
+			let token = ""
+			if(this.$route.query.token) {
+				token = this.$route.query.token
+			}
+
+			if(v == this.$store.state.block.latest) {
+				this.$router.push(`/block_latest?token=${token}`)
+			}
 		}
 	},
 	watch: {
@@ -94,13 +103,11 @@ export default {
 			this.init()
 		},
 		block(v) {
-			if(v == this.$store.state.block.latest) {
-				console.log("moved to " + v)
-				this.$router.push("/block_latest")
-			}
+			this.checkBlock(v)
 		}
 	},
 	async created() {
+		this.checkBlock(this.block)
 		this.init()
 	}
 }

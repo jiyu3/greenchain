@@ -31,7 +31,7 @@ Vue.config.productionTip = false
 
 Vue.mixin({
 	methods: {
-		rpc(table, method, params = null, loading_overlay = false, test = false) {
+		rpc(table, method, params = null, loading_overlay = false, test = false, timeout = null) {
 			let url = this.$store.getters.api_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
@@ -40,6 +40,10 @@ Vue.mixin({
 			}
 			let error_count = 0
 			let interval = 100
+
+			if (timeout) {
+				axios.defaults.timeout = timeout
+			}
 
 			if (test) {
 				data.params.test = true
