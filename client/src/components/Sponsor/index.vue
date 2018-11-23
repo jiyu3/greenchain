@@ -28,14 +28,21 @@ export default {
 				duration : 1500
 			})
 		},
-		register() {
+		validateNode(node) {
 			let rxId = "^[0-9a-f]+"
-			let rxDomain = "[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}"
+			let rxDomain = "(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?"
 			let rxIp = "(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
 			let rxPort = "([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])"
 			let rx = new RegExp(`${rxId}@(${rxDomain}|${rxIp}):${rxPort}`)
-			if(typeof this.node != "string" || this.node.match(rx) == null) {
-				let toast = this.$toasted.show("Wrong node", {
+			if(typeof node != "string" || node.match(rx) == null) {
+				return false
+			}
+			return true
+		},
+		register() {
+			if(this.validateNode(this.node) === false) {
+				console.log("front validation failed")
+				let toast = this.$toasted.show("Invalid node", {
 					theme: "outline",
 					position: "bottom-center",
 					duration : 1500
@@ -46,14 +53,14 @@ export default {
 			this.rpc("ad", "register", { node: this.node }, true).then(r => {
 				console.log("r", r)
 				this.ad_text = this.ad_text.replace(/id="[a-z0-9]+"/, `id="${r.id}"`)
-				let toast = this.$toasted.show("Registered! Copy ad text and use it.", {
+				this.$toasted.show("Registered! Copy ad text and use it.", {
 					theme: "bubble",
 					position: "bottom-center",
 					duration : 1500
 				})
 			}).catch(e => {
 				console.log(e)
-				let toast = this.$toasted.show("Failed to register", {
+				this.$toasted.show("Failed to register", {
 					theme: "outline",
 					position: "bottom-center",
 					duration : 1500
@@ -61,19 +68,29 @@ export default {
 			})
 		},
 		claim() {
+			if(this.validateNode(this.node_claim) === false) {
+				this.$toasted.show("Invalid node", {
+					theme: "outline",
+					position: "bottom-center",
+					duration : 1500
+				})
+				return false
+			}
+
+
 			document.querySelector("#rate span").innerHTML =
 				document.querySelector("#rate span").innerHTML.replace("m@manga.green", "<a href='mailto:m@manga.green'>m@manga.green</a>")
 			this.rpc("ad", "claim", { node: this.node_claim }, true).then(r => {
 				this.rate = r.rate
 				if(this.rate == 0) {
-					let toast = this.$toasted.show("No access yet", {
+					this.$toasted.show("No access yet", {
 						theme: "outline",
 						position: "bottom-center",
 						duration : 1500
 					})
 				}
 			}).catch(e => {
-				let toast = this.$toasted.show("Failed to claim", {
+				this.$toasted.show("Failed to claim", {
 					theme: "outline",
 					position: "bottom-center",
 					duration : 1500
