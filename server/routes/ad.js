@@ -22,16 +22,10 @@ router.get('/', function (req, res, next) {
 router.post('/register', async (req, res, next) => {
 	let p = req.body.params
 
-	let rxId = "^[0-9a-f]+"
-	let rxDomain = "[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}"
-	let rxIp = "(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
-	let rxPort = "([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])"
-	let rx = new RegExp(`${rxId}@(${rxDomain}|${rxIp}):${rxPort}`)
-
-	if (typeof p.node != "string" || p.node.match(rx) == null) {
-		res_rpc.result = { error: `${p.node} is not correct node.` }
+	if (validateNode(p.node) === false) {
+		res_rpc.result = { error: "Invalid node" }
 		res.status(400)
-		return res.send(JSON.stringify(res_rpc))
+		res.send(JSON.stringify(res_rpc))
 	}
 
 	DB.insert("user", { node: p.node }).then(r => {
@@ -89,6 +83,12 @@ router.post('/access', async (req, res, next) => {
 router.post('/claim', async (req, res, next) => {
 	let p = req.body.params
 
+	if (validateNode(p.node) === false) {
+		res_rpc.result = { error: "Invalid node" }
+		res.status(400)
+		res.send(JSON.stringify(res_rpc))
+	}
+
 	DB.select("user", "id", `node = "${p.node}"`).then(r => {
 		if (r.length === 1) {
 			DB.select("access", "*", `user_id = ${r[0].id}`).then(r2 => {
@@ -106,5 +106,17 @@ router.post('/claim', async (req, res, next) => {
 		res.send(JSON.stringify(res_rpc))
 	})
 })
+
+function validateNode(node) {
+	let rxId = "^[0-9a-f]+"
+	let rxDomain = "(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?"
+	let rxIp = "(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
+	let rxPort = "([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])"
+	let rx = new RegExp(`${rxId}@(${rxDomain}|${rxIp}):${rxPort}`)
+	if (typeof node != "string" || node.match(rx) == null) {
+		return false
+	}
+	return true
+}
 
 module.exports = router
