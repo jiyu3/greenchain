@@ -40,6 +40,7 @@ Vue.mixin({
 			}
 			let error_count = 0
 			let interval = 100
+			let overlay = null
 
 			let config = {}
 			if (timeout) {
@@ -50,7 +51,7 @@ Vue.mixin({
 				data.params.test = true
 			}
 			if (loading_overlay) {
-				this.$store.state.loader = this.$loading.show()
+				overlay = this.$loading.show()
 			}
 			return new Promise((resolve, reject) => {
 				let loop = setInterval(() => {
@@ -74,8 +75,8 @@ Vue.mixin({
 						}).catch(e => {
 							reject(e)
 						}).finally(r => {
-							if (this.$store.state.loader != null) {
-								this.$store.state.loader.hide()
+							if (overlay != null) {
+								overlay.hide()
 							}
 						})
 					} else {
@@ -87,12 +88,6 @@ Vue.mixin({
 					}
 				}, interval)
 			})
-		},
-		overlay_show() {
-			this.$store.state.loader = this.$loading.show()
-		},
-		overlay_hide() {
-			this.$store.state.loader.hide()
 		}
 	}
 })

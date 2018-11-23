@@ -13,7 +13,7 @@ let readRouter = require('./routes/read')
 
 let app = express()
 
-let whitelist = ['http://localhost:8101', 'https://manga.green']
+let whitelist = ['http://localhost:8101', 'https://manga.green', 'https://muse.green']
 let corsOptions = {
 	origin: function (origin, callback) {
 		if (whitelist.indexOf(origin) !== -1) {
@@ -23,8 +23,8 @@ let corsOptions = {
 		}
 	}
 }
-// app.use(cors(corsOptions))
-app.use(cors())
+app.use(cors(corsOptions))
+// app.use(cors())
 
 app.use(logger('dev'))
 app.use(express.json())

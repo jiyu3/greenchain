@@ -90,9 +90,7 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 			p.img[1] = Infinity
 		}
 
-		console.log(p.img)
 		for (let i = p.img[0]; i <= p.img[1]; i++) {
-			console.log(i)
 			let imgPath = __dirname + `/../blocks/${p.block}/${p.lang}/${i}.jpg`
 			if (fs.existsSync(imgPath)) {
 				let index = i.toString()

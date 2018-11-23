@@ -2,9 +2,6 @@
 <style src="./style.css" scoped></style>
 
 <script>
-import ChargeClient from 'lightning-charge-client'
-const charge = new ChargeClient('http://localhost:9112', '[API-TOKEN]')
-
 const QRious = require('qrious');
 
 export default {
@@ -70,32 +67,31 @@ export default {
 					token: this.$route.query.token
 				}
 				setTimeout(() => {
-					let p1 = Object.assign({ img: [0, -1] }, param_common)
-					this.rpc("read", "if_pay_then_read", p1, false, test).then(r => {
-						this.img_loaded = true
-
-						this.$store.state.loader = this.$loading.show()
-						let p2 = Object.assign({ img: [0, 2] }, param_common)
-						this.rpc("read", "if_pay_then_read", p2, true, test).then(r => {
-							for(let i=0; i<r.img.length; i++) {
+					let p = Object.assign({ img: [0, -1] }, param_common)
+					this.rpc("read", "if_pay_then_read", p, false, test).then(res => {
+						let range = [0, 5]
+						p = Object.assign({ img: range }, param_common)
+						this.rpc("read", "if_pay_then_read", p, true, test).then(r => {
+							for(let i=range[0]; r.img[i]; i++) {
 								this.img.push({
 									id: `page_${i+1}`,
 									src: 'data:image/jpeg;base64,' + r.img[i],
 									next: `#page_${i+2}`
 								})
 							}
-							this.$store.state.loader.hide()
-						})
+							this.img_loaded = true
 
-						let p3 = Object.assign({ img: [3] }, param_common)
-						this.rpc("read", "if_pay_then_read", p3, false, test).then(r => {
-							for(let i=3; i<r.img.length; i++) {
-								this.img.push({
-									id: `page_${i+1}`,
-									src: 'data:image/jpeg;base64,' + r.img[i],
-									next: `#page_${i+2}`
-								})
-							}
+							range = [6]
+							p = Object.assign({ img: range }, param_common)
+							this.rpc("read", "if_pay_then_read", p, false, test).then(r => {
+								for(let i=range[0]; r.img[i]; i++) {
+									this.img.push({
+										id: `page_${i+1}`,
+										src: 'data:image/jpeg;base64,' + r.img[i],
+										next: `#page_${i+2}`
+									})
+								}
+							})
 						})
 					})
 				}, 5000)
