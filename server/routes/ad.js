@@ -9,125 +9,102 @@ let res_rpc = {
 let db = require("../lib/db.class")
 const DB = new db()
 
-let read = require("../controllers/read.class")
-const READ = new read()
+let ad = require("../controllers/ad.class")
+const AD = new ad()
 
 let util = require("../lib/util.class")
 const UTIL = new util()
-
-// testnet
-const tCHARGE = `http://api-token:midori@test.cln.green:9112`
-const tNODE = `031201e62297a420a3878d0d8b7c4206553d354097da1a9e7c34158303d9223569@testnet.cln.green:9735`
-
-// mainnet
-const CHARGE = `http://api-token:d284b26fff3fc441e275a0048d8594a02641decd@cln.green:9112`
-const NODE = `02009947c197575f5a948e1e4343c41dc2e6122a9bd644629afb919f30e1115ff8@cln.green:9735`
-
-let request = require("request")
 
 router.get('/', function (req, res, next) {
 	res.send('Be yourself; everything else is taken.')
 })
 
-let FEE = {
-	click: 135000
-}
-let tFEE = {
-	click: 1000
-}
-
-router.post('/create', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
 	let p = req.body.params
-	let charge = p.test ? tCHARGE : CHARGE
-	let node = p.test ? tNODE : NODE
 
+	let rxId = "^[0-9a-f]+"
+	let rxDomain = "[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}"
+	let rxIp = "(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
+	let rxPort = "([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])"
+	let rx = new RegExp(`${rxId}@(${rxDomain}|${rxIp}):${rxPort}`)
 
+	if (typeof p.node != "string" || p.node.match(rx) == null) {
+		res_rpc.result = { error: `${p.node} is not correct node.` }
+		res.status(400)
+		return res.send(JSON.stringify(res_rpc))
+	}
 
-	request.post(`${charge}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
-		if (err) {
-			res_rpc.result = { error: err }
-		} else {
-			res_rpc.result = { error: null, invoice: JSON.parse(body), node: node }
-		}
+	DB.insert("user", { node: p.node }).then(r => {
+		res_rpc.result = { error: null, id: r.insertId }
 		res.send(JSON.stringify(res_rpc))
-	});
-})
-
-router.post('/if_click_then_read', async (req, res, next) => {
-	let p = req.body.params
-	let fs = require("fs")
-	let charge = p.test ? tCHARGE : CHARGE
-	let fee = p.test ? tFEE : FEE
-	let url = `${charge}/invoice/${p.id}/wait?timeout=${p.timeout}`
-
-	request.get(url, (err, resp, body) => {
-		if (!resp) {
-			res_rpc.result = Object.assign({ error: "Response is empty" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
-
-		if (resp.statusCode == 402) {
-			res_rpc.result = Object.assign({ error: "Timeout: 402 payment required" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
-
-		body = JSON.parse(body)
-		if (body.msatoshi_received < fee.manga) {
-			res_rpc.result = Object.assign({ error: "Insufficient fee" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
-
-		if (resp.statusCode != 200) {
-			res_rpc.result = Object.assign({ error: "Unknown error" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
-
-		let images = []
-		let promises = []
-		if (p.img[1] == null) {
-			p.img[1] = Infinity
-		}
-
-		console.log(p.img)
-		for (let i = p.img[0]; i <= p.img[1]; i++) {
-			console.log(i)
-			let imgPath = __dirname + `/../blocks/${p.block}/${p.lang}/${i}.jpg`
-			if (fs.existsSync(imgPath)) {
-				let index = i.toString()
-				promises.push(
-					UTIL.readFileAsync(imgPath).then(img => {
-						images[index] = img
-					})
-				)
-			} else {
-				break;
-			}
-		}
-
-		Promise.all(promises).then(() => {
-			res_rpc.result = Object.assign({ error: null }, { img: images })
-			res.json(JSON.stringify(res_rpc))
+	}).catch(e => {
+		console.log("failed to insert")
+		DB.select("user", "*", `node = "${p.node}"`).then(r => {
+			res_rpc.result = { error: null, id: r[0].id }
+			res.send(JSON.stringify(res_rpc))
+		}).catch(e => {
+			res_rpc.result = { error: "Couldn't insert data." }
+			res.status(400)
+			res.send(JSON.stringify(res_rpc))
 		})
 	})
 })
 
-router.post('/withdraw', async (req, res, next) => {
+router.post('/access', async (req, res, next) => {
 	let p = req.body.params
-	let charge = p.test ? tCHARGE : CHARGE
-	let node = p.test ? tNODE : NODE
+	let ref = req.header('Referer')
+	let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-	request.post(`${charge}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
-		if (err) {
-			res_rpc.result = { error: err }
+	if (ref.match(/https?:\/\/[\w/:%#\$&\?\(\)~\.=\+\-]+/) == null) {
+		console.log(ref + " isnt matched")
+		res.status(403)
+		return res.send(JSON.stringify(res_rpc))
+	}
+	if (ip == null) {
+		console.log(ip + " isnt matched")
+		res.status(403)
+		return res.send(JSON.stringify(res_rpc))
+	}
+
+	console.log(p.user_id, ref, ip)
+
+
+	DB.select("access", "user_id, ip", `user_id = ${p.user_id} AND ip = "${ip}"`).then(r => {
+		if (r.length === 0) {
+			DB.insert("access", { user_id: p.user_id, referrer: ref, ip: ip }).then(r => {
+				res_rpc.result = { error: null }
+				res.send(JSON.stringify(res_rpc))
+			}).catch(e => {
+				throw e
+			})
 		} else {
-			res_rpc.result = { error: null, invoice: JSON.parse(body), node: node }
+			throw "Duplicate Access"
 		}
+	}).catch(e => {
+		res_rpc.result = { error: e }
 		res.send(JSON.stringify(res_rpc))
-	});
+	})
+})
+
+router.post('/claim', async (req, res, next) => {
+	let p = req.body.params
+
+	DB.select("user", "id", `node = "${p.node}"`).then(r => {
+		if (r.length === 1) {
+			DB.select("access", "*", `user_id = ${r[0].id}`).then(r2 => {
+				res_rpc.result = { error: null, rate: r2.length }
+				res.send(JSON.stringify(res_rpc))
+			}).catch(e => {
+				throw e
+			})
+		} else {
+			throw `duplicate node info are registered.`
+		}
+	}).catch(e => {
+		res_rpc.result = { error: e }
+		res.status(400)
+		res.send(JSON.stringify(res_rpc))
+	})
 })
 
 module.exports = router

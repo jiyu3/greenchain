@@ -8,6 +8,7 @@ let cookieParser = require('cookie-parser')
 let logger = require('morgan')
 let cors = require('cors')
 
+let adRouter = require('./routes/ad')
 let readRouter = require('./routes/read')
 
 let app = express()
@@ -22,8 +23,8 @@ let corsOptions = {
 		}
 	}
 }
-app.use(cors(corsOptions))
-// app.use(cors())
+// app.use(cors(corsOptions))
+app.use(cors())
 
 app.use(logger('dev'))
 app.use(express.json())
@@ -32,6 +33,7 @@ app.use(cookieParser())
 //app.use(express.static(path.join(__dirname, 'public')))
 //app.use(express.static('blocks'));
 
+app.use('/ad', adRouter)
 app.use('/read', readRouter)
 
 // catch 404 and forward to error handler

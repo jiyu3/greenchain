@@ -14,15 +14,14 @@
 	text-align: left;
 }
 
-/* Vue Toast start */
-.toasted.bubble {
-	background-color: limegreen;
-	border-color: limegreen;
+#node, #node_claim {
+	float: left;
 }
 
-.toasted.outline {
-	background-color: #dc3545;
-	border-color: #dc3545;
-	color: white;
+#insentive {
+	margin-bottom: 50px;
 }
-/* Vue Toast end */
+
+#ad {
+	margin-top: 50px;
+}

@@ -26,7 +26,6 @@ export default {
 	},
 	methods: {
 		init() {
-			console.log("this.$i18n.locale", this.$i18n.locale)
 			if( this.$i18n.locale != "ja" &&
 				this.$i18n.locale != "zh-cn" &&
 				this.$i18n.locale != "zh-tw") {
@@ -42,7 +41,7 @@ export default {
 				msatoshi = 1000
 			}
 
-			this.rpc("cln", "pay", { msatoshi: msatoshi }, true, test, 10000).then(r => {
+			this.rpc("read", "pay", { msatoshi: msatoshi }, true, test, 10000).then(r => {
 				console.log(r)
 
 				this.payreq = "lightning:" + r.invoice.payreq

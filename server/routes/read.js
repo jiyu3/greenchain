@@ -25,7 +25,7 @@ const NODE = `02009947c197575f5a948e1e4343c41dc2e6122a9bd644629afb919f30e1115ff8
 
 let request = require("request")
 
-router.get('/', function (req, res, next) {
+router.post('/', function (req, res, next) {
 	res.send('Be yourself; everything else is taken.')
 })
 

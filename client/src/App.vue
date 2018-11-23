@@ -341,6 +341,18 @@ footer + #btn-notify {
 	display: none;
 }
 
+/* Vue Toast */
+.toasted.bubble {
+	background-color: limegreen !important;
+	border-color: limegreen !important;
+}
+
+.toasted.outline {
+	background-color: #dc3545 !important;
+	border-color: #dc3545 !important;
+	color: white !important;
+}
+
 /* ??? */
 
 #secret_btn {

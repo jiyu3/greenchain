@@ -1,10 +1,10 @@
 module.exports = class DB {
-	// constructor() {
-	// 	let mysql = require('mysql')
-	// 	let conf = require('../config.json')
-	// 	this.db = mysql.createConnection(conf.db)
-	// 	this.db.connect()
-	// }
+	constructor() {
+		let mysql = require('mysql')
+		let conf = require('../config.json')
+		this.db = mysql.createConnection(conf.db)
+		this.db.connect()
+	}
 
 	select(table, value, where = "1", others) {
 		let query = `SELECT ${value} FROM ${table} WHERE ${where} `

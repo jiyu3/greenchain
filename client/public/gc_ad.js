@@ -14,6 +14,11 @@ ad_link.href = "https://manga.green"
 ad_link.target = "_blank"
 ad.appendChild(ad_link)
 
+let user_id = document.currentScript.getAttribute("id")
+if (user_id) {
+	ad_link.href += `?id=${user_id}`
+}
+
 for (let i = 1; i < 5; i++) {
 	let ad_img = document.createElement("img")
 	ad_img.classList.add("gc_ad_img")
