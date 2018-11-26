@@ -323,7 +323,7 @@ footer + #btn-notify {
 }
 
 .facebook {
-	margin-top: 5px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
