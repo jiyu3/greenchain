@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "b": "vue-cli-service build",
+    "s": "vue-cli-service serve",
+    "eb": "vue-cli-service electron:build",
+    "es": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
     "stop": "pkill -f gc-client"
   },
   "dependencies": {
@@ -29,6 +32,8 @@
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
+    "electron": "^2.0.0",
+    "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
     "vue-cli-plugin-i18n": "^0.5.0",
     "vue-template-compiler": "^2.5.17"
   },
@@ -55,5 +60,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": "background.js"
 }

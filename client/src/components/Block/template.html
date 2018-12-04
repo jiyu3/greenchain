@@ -13,6 +13,12 @@
 					</div>
 					<router-link v-if="block > 1" :to="prev">Prev | </router-link>
 					<router-link :to="next">Next</router-link>
+					<div class="credit" v-if="$i18n.locale == 'en' && block < 3">
+						Translated by <a href="https://twitter.com/ThunderWolfLive" target="_blank">Andrew Bush</a>
+					</div>
+					<div class="credit" v-if="$i18n.locale == 'fr' && block < 3">
+						Translated by Stéphane Grenier
+					</div>
 				</div>
 			</b-col>
 		</b-row>
