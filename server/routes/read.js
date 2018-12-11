@@ -90,16 +90,21 @@ router.post('/if_pay_then_read', async (req, res, next) => {
 			p.img[1] = Infinity
 		}
 
+		console.log("start: " + p.img[0])
+		console.log("end: " + p.img[1])
 		for (let i = p.img[0]; i <= p.img[1]; i++) {
 			let imgPath = __dirname + `/../blocks/${p.block}/${p.lang}/${i}.jpg`
+			console.log("imgPath", imgPath)
 			if (fs.existsSync(imgPath)) {
 				let index = i.toString()
+				console.log(`img ${i} has been read`)
 				promises.push(
 					UTIL.readFileAsync(imgPath).then(img => {
 						images[index] = img
 					})
 				)
 			} else {
+				console.log(`failed to read img ${i}`)
 				break;
 			}
 		}

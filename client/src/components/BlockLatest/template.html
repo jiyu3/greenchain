@@ -29,6 +29,9 @@
 						</template>
 					</div>
 					<router-link :to="prev">Prev</router-link>
+					<div class="credit" v-if="$i18n.locale == 'fr'">
+						Translated by Stéphane Grenier
+					</div>
 				</div>
 			</b-col>
 		</b-row>

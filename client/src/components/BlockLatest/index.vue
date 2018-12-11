@@ -23,14 +23,6 @@ export default {
 	},
 	methods: {
 		init() {
-			if( this.$i18n.locale != "ja" &&
-				this.$i18n.locale != "zh-cn" &&
-				this.$i18n.locale != "zh-tw") {
-				alert("This block is not translated the language you chose.")
-				localStorage.locale = "ja"
-				return location.reload()
-			}
-
 			let test = false
 			let msatoshi = 135000
 			if(this.$route.name === "BlockLatestTest") {
