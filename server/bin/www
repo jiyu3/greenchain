@@ -34,8 +34,8 @@ server.on('listening', onListening);
  */
 var cluster = require('cluster');
 cluster.on('exit', function (worker, code, signal) {
-	console.log('Worker %d died with code/signal %s. Restarting worker...', worker.process.pid, signal || code);
-	cluster.fork();
+  console.log('Worker %d died with code/signal %s. Restarting worker...', worker.process.pid, signal || code);
+  cluster.fork();
 });
 
 /**

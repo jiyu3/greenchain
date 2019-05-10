@@ -2,8 +2,8 @@ let express = require('express');
 let router = express.Router();
 
 let res_rpc = {
-	jsonrpc: "2.0",
-	result: null
+  jsonrpc: "2.0",
+  result: null
 }
 
 let db = require("../lib/db.class")
@@ -26,94 +26,94 @@ const NODE = `02009947c197575f5a948e1e4343c41dc2e6122a9bd644629afb919f30e1115ff8
 let request = require("request")
 
 router.post('/', function (req, res, next) {
-	res.send('Be yourself; everything else is taken.')
+  res.send('Be yourself; everything else is taken.')
 })
 
 let FEE = {
-	manga: 135000
+  manga: 135000
 }
 let tFEE = {
-	manga: 1000
+  manga: 1000
 }
 
 router.post('/pay', async (req, res, next) => {
-	let p = req.body.params
-	let charge = p.test ? tCHARGE : CHARGE
-	let node = p.test ? tNODE : NODE
+  let p = req.body.params
+  let charge = p.test ? tCHARGE : CHARGE
+  let node = p.test ? tNODE : NODE
 
-	request.post(`${charge}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
-		if (err) {
-			res_rpc.result = { error: err }
-		} else {
-			res_rpc.result = { error: null, invoice: JSON.parse(body), node: node }
-		}
-		res.send(JSON.stringify(res_rpc))
-	});
+  request.post(`${charge}/invoice`, { form: { msatoshi: p.msatoshi } }, (err, resp, body) => {
+    if (err) {
+      res_rpc.result = { error: err }
+    } else {
+      res_rpc.result = { error: null, invoice: JSON.parse(body), node: node }
+    }
+    res.send(JSON.stringify(res_rpc))
+  });
 })
 
 router.post('/if_pay_then_read', async (req, res, next) => {
-	let p = req.body.params
-	let fs = require("fs")
-	let charge = p.test ? tCHARGE : CHARGE
-	let fee = p.test ? tFEE : FEE
-	let url = `${charge}/invoice/${p.id}/wait?timeout=${p.timeout}`
+  let p = req.body.params
+  let fs = require("fs")
+  let charge = p.test ? tCHARGE : CHARGE
+  let fee = p.test ? tFEE : FEE
+  let url = `${charge}/invoice/${p.id}/wait?timeout=${p.timeout}`
 
-	request.get(url, (err, resp, body) => {
-		if (!resp) {
-			res_rpc.result = Object.assign({ error: "Response is empty" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
+  request.get(url, (err, resp, body) => {
+    if (!resp) {
+      res_rpc.result = Object.assign({ error: "Response is empty" }, { img: null })
+      res.json(JSON.stringify(res_rpc))
+      return false
+    }
 
-		if (resp.statusCode == 402) {
-			res_rpc.result = Object.assign({ error: "Timeout: 402 payment required" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
+    if (resp.statusCode == 402) {
+      res_rpc.result = Object.assign({ error: "Timeout: 402 payment required" }, { img: null })
+      res.json(JSON.stringify(res_rpc))
+      return false
+    }
 
-		body = JSON.parse(body)
-		if (body.msatoshi_received < fee.manga) {
-			res_rpc.result = Object.assign({ error: "Insufficient fee" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
+    body = JSON.parse(body)
+    if (body.msatoshi_received < fee.manga) {
+      res_rpc.result = Object.assign({ error: "Insufficient fee" }, { img: null })
+      res.json(JSON.stringify(res_rpc))
+      return false
+    }
 
-		if (resp.statusCode != 200) {
-			res_rpc.result = Object.assign({ error: "Unknown error" }, { img: null })
-			res.json(JSON.stringify(res_rpc))
-			return false
-		}
+    if (resp.statusCode != 200) {
+      res_rpc.result = Object.assign({ error: "Unknown error" }, { img: null })
+      res.json(JSON.stringify(res_rpc))
+      return false
+    }
 
-		let images = []
-		let promises = []
-		if (p.img[1] == null) {
-			p.img[1] = Infinity
-		}
+    let images = []
+    let promises = []
+    if (p.img[1] == null) {
+      p.img[1] = Infinity
+    }
 
-		console.log("start: " + p.img[0])
-		console.log("end: " + p.img[1])
-		for (let i = p.img[0]; i <= p.img[1]; i++) {
-			let imgPath = __dirname + `/../blocks/${p.block}/${p.lang}/${i}.jpg`
-			console.log("imgPath", imgPath)
-			if (fs.existsSync(imgPath)) {
-				let index = i.toString()
-				console.log(`img ${i} has been read`)
-				promises.push(
-					UTIL.readFileAsync(imgPath).then(img => {
-						images[index] = img
-					})
-				)
-			} else {
-				console.log(`failed to read img ${i}`)
-				break;
-			}
-		}
+    console.log("start: " + p.img[0])
+    console.log("end: " + p.img[1])
+    for (let i = p.img[0]; i <= p.img[1]; i++) {
+      let imgPath = __dirname + `/../blocks/${p.block}/${p.lang}/${i}.jpg`
+      console.log("imgPath", imgPath)
+      if (fs.existsSync(imgPath)) {
+        let index = i.toString()
+        console.log(`img ${i} has been read`)
+        promises.push(
+          UTIL.readFileAsync(imgPath).then(img => {
+            images[index] = img
+          })
+        )
+      } else {
+        console.log(`failed to read img ${i}`)
+        break;
+      }
+    }
 
-		Promise.all(promises).then(() => {
-			res_rpc.result = Object.assign({ error: null }, { img: images })
-			res.json(JSON.stringify(res_rpc))
-		})
-	})
+    Promise.all(promises).then(() => {
+      res_rpc.result = Object.assign({ error: null }, { img: images })
+      res.json(JSON.stringify(res_rpc))
+    })
+  })
 })
 
 module.exports = router

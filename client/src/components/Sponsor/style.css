@@ -1,27 +1,27 @@
 .gc_ad_text {
-	text-align: center !important;
+  text-align: center !important;
 }
 
 .gc_ad_text input {
-	margin: 10px auto;
+  margin: 10px auto;
 }
 
 .gc_ad_text button {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #main {
-	text-align: left;
+  text-align: left;
 }
 
 #node, #node_claim {
-	float: left;
+  float: left;
 }
 
 #insentive {
-	margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 #ad {
-	margin-top: 50px;
+  margin-top: 50px;
 }

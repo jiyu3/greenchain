@@ -1,39 +1,39 @@
 <div>
-	<title>Green Chain</title>
-	<b-container>
-		<b-row id="insentive">
-			<b-col>
-				{{ $t("sponsor.incentive") }}
-				<div>
-					<b-form-input id="node" v-model="node" class="w-75" placeholder="<nodeid>@<ip or doamin>:<port>">
-					</b-form-input>
-					<button type="button" class="btn btn-success" @click="register">Register Node</button>
-				</div>
-			</b-col>
-		</b-row>
-		<b-row id="ad">
-			<b-col>
-				{{ $t("sponsor.howtoadvertise") }}
-				<div class="gc_ad_text">
-					<b-form-input id="copyText" v-model="ad_text" readonly class="w-75"></b-form-input>
-					<button id="copyBtn" type="button" class="btn btn-success" v-clipboard:copy="ad_text" v-clipboard:success="onCopy" v-clipboard:error="onCopyError">{{ copy }}</button>
-				</div>
-				{{ $t("sponsor.place") }}<br>
-				{{ $t("sponsor.numberoftimes") }}
-				<br>
-			</b-col>
-		</b-row>
-		<b-row id="ad">
-			<b-col>
-				{{ $t("sponsor.claim") }}
-				<div>
-					<b-form-input id="node_claim" v-model="node_claim" class="w-75" placeholder="<nodeid>@<ip or doamin>:<port>"></b-form-input>
-					<button id="claim" type="button" class="btn btn-success" @click="claim">Claim ad rate</button>
-				</div>
-				<div v-show="rate" id="rate">
-					<span>{{ $t("sponsor.invoice") }}</span>: {{ rate }} satoshi
-				</div>
-			</b-col>
-		</b-row>
-	</b-container>
+  <title>Green Chain</title>
+  <b-container>
+    <b-row id="insentive">
+      <b-col>
+        {{ $t("sponsor.incentive") }}
+        <div>
+          <b-form-input id="node" v-model="node" class="w-75" placeholder="<nodeid>@<ip or doamin>:<port>">
+          </b-form-input>
+          <button type="button" class="btn btn-success" @click="register">Register Node</button>
+        </div>
+      </b-col>
+    </b-row>
+    <b-row id="ad">
+      <b-col>
+        {{ $t("sponsor.howtoadvertise") }}
+        <div class="gc_ad_text">
+          <b-form-input id="copyText" v-model="ad_text" readonly class="w-75"></b-form-input>
+          <button id="copyBtn" type="button" class="btn btn-success" v-clipboard:copy="ad_text" v-clipboard:success="onCopy" v-clipboard:error="onCopyError">{{ copy }}</button>
+        </div>
+        {{ $t("sponsor.place") }}<br>
+        {{ $t("sponsor.numberoftimes") }}
+        <br>
+      </b-col>
+    </b-row>
+    <b-row id="ad">
+      <b-col>
+        {{ $t("sponsor.claim") }}
+        <div>
+          <b-form-input id="node_claim" v-model="node_claim" class="w-75" placeholder="<nodeid>@<ip or doamin>:<port>"></b-form-input>
+          <button id="claim" type="button" class="btn btn-success" @click="claim">Claim ad rate</button>
+        </div>
+        <div v-show="rate" id="rate">
+          <span>{{ $t("sponsor.invoice") }}</span>: {{ rate }} satoshi
+        </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </div>

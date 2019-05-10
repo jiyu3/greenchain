@@ -1,39 +1,39 @@
 <div>
-	<b-container v-show="loaded">
-		<b-row v-if="!img_loaded">
-			<b-col>
-				<p>{{ $t("block_latest.reqpay") }}</p>
-				<a :href="payreq">
-					<canvas ref="payreq"></canvas>
-					<!-- <img ref="payreq" class="qr payreq" :src="qr.payreq"> -->
-				</a>
-			</b-col>
-		</b-row>
-		<b-row style="margin-top: 20px;" v-if="!img_loaded">
-			<b-col>
-				<p>{{ $t("block_latest.reqchannel") }}</p>
-				<a :href="node">
-					<canvas ref="node"></canvas>
-					<!-- <img ref="node" class="qr node" :src="qr.node"> -->
-				</a>
-			</b-col>
-		</b-row>
-		<b-row v-if="img_loaded">
-			<b-col>
-				<div class="main">
-					<div class="read_manga" ref="read_manga">
-						<template v-for="(e, i) in img">
-							<a :href="e.next" :id="e.id" :ref="e.id">
-								<img :src="e.src">
-							</a>
-						</template>
-					</div>
-					<router-link :to="prev">Prev</router-link>
-					<div class="credit" v-if="$i18n.locale == 'fr'">
-						Translated by Stéphane Grenier
-					</div>
-				</div>
-			</b-col>
-		</b-row>
-	</b-container>
+  <b-container v-show="loaded">
+    <b-row v-if="!img_loaded">
+      <b-col>
+        <p>{{ $t("block_latest.reqpay") }}</p>
+        <a :href="payreq">
+          <canvas ref="payreq"></canvas>
+          <!-- <img ref="payreq" class="qr payreq" :src="qr.payreq"> -->
+        </a>
+      </b-col>
+    </b-row>
+    <b-row style="margin-top: 20px;" v-if="!img_loaded">
+      <b-col>
+        <p>{{ $t("block_latest.reqchannel") }}</p>
+        <a :href="node">
+          <canvas ref="node"></canvas>
+          <!-- <img ref="node" class="qr node" :src="qr.node"> -->
+        </a>
+      </b-col>
+    </b-row>
+    <b-row v-if="img_loaded">
+      <b-col>
+        <div class="main">
+          <div class="read_manga" ref="read_manga">
+            <template v-for="(e, i) in img">
+              <a :href="e.next" :id="e.id" :ref="e.id">
+                <img :src="e.src">
+              </a>
+            </template>
+          </div>
+          <router-link :to="prev">Prev</router-link>
+          <div class="credit" v-if="$i18n.locale == 'fr'">
+            Translated by Stéphane Grenier
+          </div>
+        </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </div>

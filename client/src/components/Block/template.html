@@ -1,26 +1,26 @@
 <div>
-	<b-container v-show="loaded">
-		<b-row>
-			<b-col>
-				<div class="loading" v-if="!loaded">Loading...</div>
-				<div class="main">
-					<div class="read_manga" ref="read_manga">
-						<template v-for="(e, i) in img">
-							<a :href="e.next" :id="e.id" :ref="e.id">
-								<img :src="e.src">
-							</a>
-						</template>
-					</div>
-					<router-link v-if="block > 1" :to="prev">Prev | </router-link>
-					<router-link :to="next">Next</router-link>
-					<div class="credit" v-if="$i18n.locale == 'en' && block < 3">
-						Translated by <a href="https://twitter.com/ThunderWolfLive" target="_blank">Andrew Bush</a>
-					</div>
-					<div class="credit" v-if="$i18n.locale == 'fr' && block < 3">
-						Translated by Stéphane Grenier
-					</div>
-				</div>
-			</b-col>
-		</b-row>
-	</b-container>
+  <b-container v-show="loaded">
+    <b-row>
+      <b-col>
+        <div class="loading" v-if="!loaded">Loading...</div>
+        <div class="main">
+          <div class="read_manga" ref="read_manga">
+            <template v-for="(e, i) in img">
+              <a :href="e.next" :id="e.id" :ref="e.id">
+                <img :src="e.src">
+              </a>
+            </template>
+          </div>
+          <router-link v-if="block > 1" :to="prev">Prev | </router-link>
+          <router-link :to="next">Next</router-link>
+          <div class="credit" v-if="$i18n.locale == 'en' && block < 3">
+            Translated by <a href="https://twitter.com/ThunderWolfLive" target="_blank">Andrew Bush</a>
+          </div>
+          <div class="credit" v-if="$i18n.locale == 'fr' && block < 3">
+            Translated by Stéphane Grenier
+          </div>
+        </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </div>

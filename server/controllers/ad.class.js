@@ -1,4 +1,4 @@
 module.exports = class AD {
-	constructor() {
-	}
+  constructor() {
+  }
 }

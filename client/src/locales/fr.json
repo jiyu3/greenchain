@@ -1,12 +1,12 @@
 {
-	"home": {
-		"latest": "dernier bloc",
-		"past": "vieux bloc"
-	},
-	"sponsor": {
-		"howtoadvertise": "当サイトの宣伝に協力していただける方は、以下のコードを自分のサイトに埋め込んでください。このページのように画像が表示されます。",
-		"place": "window.gc_ad_position を変更すれば、上下左右の位置調整ができます。例えば \"top left\" と入れると、左上に配置されます。デフォルトは右下です。",
-		"numberoftimes": "window.gc_ad_fps を変更すれば、一秒間に何枚絵が切り替わるかを調整できます。デフォルトは５枚／秒です。",
-		"incentive": "将来的にはライトニングネットワークを用いた公告機能を実装し、宣伝にインセンティブをつける予定です。"
-	}
+  "home": {
+    "latest": "dernier bloc",
+    "past": "vieux bloc"
+  },
+  "sponsor": {
+    "howtoadvertise": "当サイトの宣伝に協力していただける方は、以下のコードを自分のサイトに埋め込んでください。このページのように画像が表示されます。",
+    "place": "window.gc_ad_position を変更すれば、上下左右の位置調整ができます。例えば \"top left\" と入れると、左上に配置されます。デフォルトは右下です。",
+    "numberoftimes": "window.gc_ad_fps を変更すれば、一秒間に何枚絵が切り替わるかを調整できます。デフォルトは５枚／秒です。",
+    "incentive": "将来的にはライトニングネットワークを用いた公告機能を実装し、宣伝にインセンティブをつける予定です。"
+  }
 }

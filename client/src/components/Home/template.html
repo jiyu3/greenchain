@@ -1,26 +1,27 @@
 <div>
-	<b-container>
-		<b-row>
-			<b-col>
-				<div class="latest">
-					<h3>{{ $t("home.latest") }}</h3>
-					<router-link class="latest btn btn-success" to="./block_latest">⚡Block 3⚡</router-link>
-				</div>
-			</b-col>
-		</b-row>
+  <b-container>
+    <b-row>
+      <b-col>
+        <div class="latest">
+          <h3>{{ $t("home.latest") }}</h3>
+          <router-link class="latest btn btn-success" to="./block/4">Block 4</router-link>
+        </div>
+      </b-col>
+    </b-row>
 
-		<b-row>
-			<b-col class="old">
-				<h4>{{ $t("home.past") }}</h4>
-				<router-link class="btn btn-success" to="./block/1">Block 1</router-link>
-				<router-link class="btn btn-success" to="./block/2">Block 2</router-link>
-			</b-col>
-		</b-row>
+    <b-row>
+      <b-col class="old">
+        <h4>{{ $t("home.past") }}</h4>
+        <router-link class="btn btn-success" to="./block/1">Block 1</router-link>
+        <router-link class="btn btn-success" to="./block/2">Block 2</router-link>
+        <router-link class="btn btn-success" to="./block/2">Block 3</router-link>
+      </b-col>
+    </b-row>
 
-		<b-row>
-			<b-col>
-				<div class="notify" id="notify"></div>
-			</b-col>
-		</b-row>
-	</b-container>
+    <b-row>
+      <b-col>
+        <div class="notify" id="notify"></div>
+      </b-col>
+    </b-row>
+  </b-container>
 </div>

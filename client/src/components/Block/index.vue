@@ -3,112 +3,117 @@
 
 <script>
 export default {
-	data() {
-		let block = +this.$route.params.id
-		return {
-			loaded: false,
-			visible: [true],
-			block: block,
-			event: null,
-			img: [
-				{
-					id: "page_0",
-					src: null,
-					next: "#page_1"
-				}
-			],
-			prev: `/block/${block - 1}`,
-			next: `/block/${block + 1}`
-		}
-	},
-	methods: {
-		handleScroll(nb_page) {
-			let elem = this.$refs[`page_${nb_page}`][0]
-			if(elem === void 0) {
-				return false;
-			}
-			if(!this.visible[nb_page]) {
-				let top = elem.getBoundingClientRect().top
-				this.visible[nb_page] = top < window.innerHeight + 100
-			}
-			if(this.visible[nb_page]) {
-				window.removeEventListener('scroll', this.event)
+  data() {
+    let block = +this.$route.params.id
+    return {
+      loaded: false,
+      visible: [true],
+      block: block,
+      event: null,
+      img: [
+        {
+          id: "page_0",
+          src: null,
+          next: "#page_1"
+        }
+      ],
+      prev: `/block/${block - 1}`,
+      next: `/block/${block + 1}`
+    }
+  },
+  methods: {
+    handleScroll(nb_page) {
+      let elem = this.$refs[`page_${nb_page}`][0]
+      if(elem === void 0) {
+        return false;
+      }
+      if(!this.visible[nb_page]) {
+        let top = elem.getBoundingClientRect().top
+        this.visible[nb_page] = top < window.innerHeight + 100
+      }
+      if(this.visible[nb_page]) {
+        window.removeEventListener('scroll', this.event)
 
-				let src = null
-				try {
-					src = require(`../../images/blocks/${this.block}/${this.$i18n.locale}/${nb_page+1}.jpg`)
-				} catch(e) {
-					document.getElementById(`page_${nb_page}`).href = "#footer"
-					return false
-				}
+        let src = null
+        try {
+          src = require(`../../images/blocks/${this.block}/${this.$i18n.locale}/${nb_page+1}.jpg`)
+        } catch(e) {
+          document.getElementById(`page_${nb_page}`).href = "#footer"
+          return false
+        }
 
-				this.img.push({
-					id: `page_${nb_page+1}`,
-					src: src,
-					next: `#page_${nb_page+2}`
-				})
+        this.img.push({
+          id: `page_${nb_page+1}`,
+          src: src,
+          next: `#page_${nb_page+2}`
+        })
 
-				this.event = () => {
-					this.handleScroll(nb_page+1)
-				}
-				window.addEventListener('scroll', this.event)
-			}
-		},
-		init() {
-			this.loaded = false
+        this.event = () => {
+          this.handleScroll(nb_page+1)
+        }
+        window.addEventListener('scroll', this.event)
+      }
+    },
+    init() {
+      if(this.block == 4 && this.$i18n.locale != "ja") {
+        localStorage.setItem("locale", "ja")
+        location.reload()
+      }
 
-			this.img = []
-			this.img = [{
-				id: `page_0`,
-				src: require(`../../images/blocks/${this.block}/${this.$i18n.locale}/0.jpg`),
-				next: `#page_1`
-			},
-			{
-				id: `page_1`,
-				src: require(`../../images/blocks/${this.block}/${this.$i18n.locale}/1.jpg`),
-				next: `#page_2`
-			}]
+      this.loaded = false
 
-			this.loaded = true
+      this.img = []
+      this.img = [{
+        id: `page_0`,
+        src: require(`../../images/blocks/${this.block}/${this.$i18n.locale}/0.jpg`),
+        next: `#page_1`
+      },
+      {
+        id: `page_1`,
+        src: require(`../../images/blocks/${this.block}/${this.$i18n.locale}/1.jpg`),
+        next: `#page_2`
+      }]
 
-			if(this.event != null) {
-				window.removeEventListener('scroll', this.event)
-			}
-			this.event = () => {
-				this.handleScroll(1)
-			}
-			window.addEventListener('scroll', this.event)
-		},
-		checkBlock(v) {
-			let token = ""
-			if(this.$route.query.token) {
-				token = this.$route.query.token
-			}
+      this.loaded = true
 
-			if(v == this.$store.state.block.latest) {
-				this.$router.push(`/block_latest?token=${token}`)
-			}
-		}
-	},
-	watch: {
-		"$i18n.locale"(v) {
-			this.init()
-		},
-		"$route.params.id"(v) {
-			window.scrollTo(0, 0)
-			v = +v
-			this.block = v
-			this.prev = `/block/${v - 1}`
-			this.next = `/block/${v + 1}`
-			this.init()
-		},
-		block(v) {
-			this.checkBlock(v)
-		}
-	},
-	async created() {
-		this.checkBlock(this.block)
-		this.init()
-	}
+      if(this.event != null) {
+        window.removeEventListener('scroll', this.event)
+      }
+      this.event = () => {
+        this.handleScroll(1)
+      }
+      window.addEventListener('scroll', this.event)
+    },
+    checkBlock(v) {
+      let token = ""
+      if(this.$route.query.token) {
+        token = this.$route.query.token
+      }
+
+      if(v == this.$store.state.block.latest) {
+        this.$router.push(`/block_latest?token=${token}`)
+      }
+    }
+  },
+  watch: {
+    "$i18n.locale"(v) {
+      this.init()
+    },
+    "$route.params.id"(v) {
+      window.scrollTo(0, 0)
+      v = +v
+      this.block = v
+      this.prev = `/block/${v - 1}`
+      this.next = `/block/${v + 1}`
+      this.init()
+    },
+    block(v) {
+      this.checkBlock(v)
+    }
+  },
+  async created() {
+    this.checkBlock(this.block)
+    this.init()
+  }
 }
 </script>

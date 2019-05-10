@@ -30,79 +30,79 @@ Vue.use(VueClipboard)
 Vue.config.productionTip = false
 
 Vue.mixin({
-	methods: {
-		rpc(table, method, params = null, loading_overlay = false, test = false, timeout = null) {
-			let url = this.$store.getters.api_url + table + "/" + method
-			let data = {
-				jsonrpc: "2.0",
-				method: "login",
-				params: params
-			}
-			let error_count = 0
-			let interval = 100
-			let overlay = null
+  methods: {
+    rpc(table, method, params = null, loading_overlay = false, test = false, timeout = null) {
+      let url = this.$store.getters.api_url + table + "/" + method
+      let data = {
+        jsonrpc: "2.0",
+        method: "login",
+        params: params
+      }
+      let error_count = 0
+      let interval = 100
+      let overlay = null
 
-			let config = {}
-			if (timeout) {
-				config.timeout = timeout
-			}
+      let config = {}
+      if (timeout) {
+        config.timeout = timeout
+      }
 
-			if (test) {
-				data.params.test = true
-			}
-			if (loading_overlay) {
-				overlay = this.$loading.show()
-			}
-			return new Promise((resolve, reject) => {
-				let loop = setInterval(() => {
-					if (params == null || params.token !== null) {
-						clearInterval(loop)
+      if (test) {
+        data.params.test = true
+      }
+      if (loading_overlay) {
+        overlay = this.$loading.show()
+      }
+      return new Promise((resolve, reject) => {
+        let loop = setInterval(() => {
+          if (params == null || params.token !== null) {
+            clearInterval(loop)
 
-						this.axios.post(
-							url, data, config
-						).then(r => {
-							let result
-							try {
-								result = JSON.parse(r.data).result
-							} catch(e) {
-								if (r.data.result == null) {
-									new Error(e)
-								} else {
-									result = r.data.result
-								}
-							}
-							resolve(result)
-						}).catch(e => {
-							reject(e)
-						}).finally(r => {
-							if (overlay != null) {
-								overlay.hide()
-							}
-						})
-					} else {
-						if (++error_count >= (3000 / interval)) {
-							clearInterval(loop)
-							this.$router.push("/")
-						}
-						params.token = this.$store.state.token
-					}
-				}, interval)
-			})
-		}
-	}
+            this.axios.post(
+              url, data, config
+            ).then(r => {
+              let result
+              try {
+                result = JSON.parse(r.data).result
+              } catch(e) {
+                if (r.data.result == null) {
+                  new Error(e)
+                } else {
+                  result = r.data.result
+                }
+              }
+              resolve(result)
+            }).catch(e => {
+              reject(e)
+            }).finally(r => {
+              if (overlay != null) {
+                overlay.hide()
+              }
+            })
+          } else {
+            if (++error_count >= (3000 / interval)) {
+              clearInterval(loop)
+              this.$router.push("/")
+            }
+            params.token = this.$store.state.token
+          }
+        }, interval)
+      })
+    }
+  }
 })
 
 router.beforeEach((to, from, next) => {
-	if (store.state.loader != null) {
-		store.state.loader.hide()
-	}
-	next()
+  if (store.state.loader != null) {
+    store.state.loader.hide()
+  }
+  next()
 })
 
 new Vue({
-	i18n,
-	router,
-	store,
-	render: h => h(App)
+  i18n,
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#app')
 
