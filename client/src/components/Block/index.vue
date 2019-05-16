@@ -90,9 +90,9 @@ export default {
         token = this.$route.query.token
       }
 
-      if(v == this.$store.state.block.latest) {
-        this.$router.push(`/block_latest?token=${token}`)
-      }
+      // if(v == this.$store.state.block.latest) {
+      //   this.$router.push(`/block_latest?token=${token}`)
+      // }
     }
   },
   watch: {
