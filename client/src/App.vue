@@ -7,6 +7,7 @@
         <select v-model="locale">
           <option value='en'>English</option>
           <option value='fr'>Français</option>
+          <option value='pl'>Polski</option>
           <option value='ja'>日本語</option>
           <option value='zh-cn'>簡体中文</option>
           <option value='zh-tw'>繁體中文</option>
@@ -41,7 +42,7 @@
           <router-link to="/license">Green License</router-link>
         </div>
         <div>
-          <a href="/block_latest_test" id="secret_btn" class="btn">test</a>
+          <a href="/block/4" id="secret_btn" class="btn">test</a>
         </div>
       </b-col>
     </footer>

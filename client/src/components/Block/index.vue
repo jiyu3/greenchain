@@ -55,7 +55,13 @@ export default {
       }
     },
     init() {
-      if(this.block == 4 && this.$i18n.locale != "ja") {
+      if(this.block == 4 && !["ja", "en", "pl"].includes(this.$i18n.locale)) {
+        alert(`This episode hasn't be translated into ${this.$i18n.locale} yet.`)
+        localStorage.setItem("locale", "ja")
+        location.reload()
+      }
+      if(this.block < 4 && this.$i18n.locale == "pl") {
+        alert(`This episode hasn't be translated into ${this.$i18n.locale} yet.`)
         localStorage.setItem("locale", "ja")
         location.reload()
       }

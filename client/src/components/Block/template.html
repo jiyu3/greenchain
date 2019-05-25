@@ -13,11 +13,26 @@
           </div>
           <router-link v-if="block > 1" :to="prev">Prev | </router-link>
           <router-link :to="next">Next</router-link>
-          <div class="credit" v-if="$i18n.locale == 'en' && block < 3">
-            Translated by <a href="https://twitter.com/ThunderWolfLive" target="_blank">Andrew Bush</a>
-          </div>
-          <div class="credit" v-if="$i18n.locale == 'fr' && block < 3">
-            Translated by Stéphane Grenier
+          <div class="credit">
+            <template v-if="$i18n.locale == 'en'">
+              <template v-if="block < 3">
+                Translated by <a href="https://twitter.com/ThunderWolfLive" target="_blank">Andrew Bush</a>
+              </template>
+              <template v-if="block == 3">
+                Translated by <a href="https://twitter.com/njbennett" target="_blank">Nick Bennett</a>
+              </template>
+              <template else>
+                Translated by <a href="http://www.lancers.jp/affiliate/track?id=1582912&link=%2Fprofile%2Freniasz" target="_blank"
+                  rel="nofollow">Marcin Sala</a>
+              </template>
+            </template>
+            <template v-if="$i18n.locale == 'fr'">
+              Translated by Stéphane Grenier
+            </template>
+            <template v-if="$i18n.locale == 'pl'">
+              Translated by <a href="http://www.lancers.jp/affiliate/track?id=1582912&link=%2Fprofile%2Freniasz" target="_blank"
+                rel="nofollow">Marcin Sala</a>
+            </template>
           </div>
         </div>
       </b-col>
