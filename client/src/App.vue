@@ -55,6 +55,12 @@
 export default {
   data() {
     let locale = localStorage.getItem("locale") ? localStorage.getItem("locale") : null
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if(urlParams.get("lang")) {
+      locale = urlParams.get("lang")
+    }
+
     if(!locale) {
       let language = (window.navigator.languages && window.navigator.languages[0]) ||
         window.navigator.language ||
@@ -71,6 +77,8 @@ export default {
       }
     }
     this.$i18n.locale = locale
+    localStorage.setItem("locale", locale)
+
 
     let description = document.getElementById("description").getAttribute("content")
     let tw =  "https://twitter.com/intent/tweet?text=" + encodeURIComponent(description + "\n" + location.href + "\n" + " #GreenChain")
@@ -89,6 +97,8 @@ export default {
   },
   watch: {
     locale(v) {
+      localStorage.setItem("locale", v)
+
       let cc_locale = localStorage.locale = this.$i18n.locale = v
       if(v === "zh-tw") {
         cc_locale = "zh_TW"
