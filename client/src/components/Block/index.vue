@@ -60,11 +60,6 @@ export default {
         localStorage.setItem("locale", "ja")
         location.reload()
       }
-      if(this.block < 4 && this.$i18n.locale == "pl") {
-        alert(`This episode hasn't be translated into ${this.$i18n.locale} yet.`)
-        localStorage.setItem("locale", "ja")
-        location.reload()
-      }
 
       this.loaded = false
 
