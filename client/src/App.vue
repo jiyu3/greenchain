@@ -42,7 +42,7 @@
           <router-link to="/license">Green License</router-link>
         </div>
         <div>
-          <a href="/block/4" id="secret_btn" class="btn">test</a>
+          <a href="/block_latest_test/4" id="secret_btn" class="btn">test</a>
         </div>
       </b-col>
     </footer>
