@@ -92,7 +92,7 @@ export default {
   },
   watch: {
     "$i18n.locale"(v) {
-      if (this.$i18n.locale !== "ja") {
+      if (this.$i18n.locale === "fr") {
         alert("Sorry, currently this block has not been translated.")
         localStorage.setItem("locale", "ja")
         location.reload()
