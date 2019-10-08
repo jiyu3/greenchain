@@ -30,7 +30,7 @@
         </div>
 
         <div class="contact">
-          <a href="https://twitter.com/jiyufreedom" target="_blank">contact</a>
+          <a href="https://twitter.com/jiyu33" target="_blank">contact</a>
         </div>
 
         <div class="license">
